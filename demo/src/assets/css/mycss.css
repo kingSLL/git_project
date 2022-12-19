@@ -1,0 +1,45 @@
+.mask {
+  background-image: url("https://s2.music.126.net/style/web2/img/coverall.png?7bf5eaf4d0b24ae6a0421d82762c7744");
+  background-repeat: no-repeat;
+}
+/* 字体 */
+/* CDN 服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: "iconfont"; /* Project id 3822544 */
+  src: url("//at.alicdn.com/t/c/font_3822544_5gfxxddk9qw.woff2?t=1671267175163")
+      format("woff2"),
+    url("//at.alicdn.com/t/c/font_3822544_5gfxxddk9qw.woff?t=1671267175163")
+      format("woff"),
+    url("//at.alicdn.com/t/c/font_3822544_5gfxxddk9qw.ttf?t=1671267175163")
+      format("truetype");
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.clickable:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.clickableWithoutLine {
+  cursor: pointer;
+}
+.el-button + .el-button {
+  margin-left: 0 !important;
+}
+.el-icon {
+  font-size: 20px !important;
+  margin-right: 3px;
+}
+.el-button {
+  padding: 5px 8px !important;
+}
+.text_over {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

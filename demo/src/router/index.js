@@ -4,15 +4,15 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      component: () => import("@/views/发现音乐/recommend_view.vue"),
+      component: () => import("@/views/discover_music/recommend_view.vue"),
     },
     {
       path: "/recommend",
-      component: () => import("@/views/发现音乐/recommend_view.vue"),
+      component: () => import("@/views/discover_music/recommend_view.vue"),
     },
     {
       path: "/rank",
-      component: () => import("@/views/发现音乐/rank_view.vue"),
+      component: () => import("@/views/discover_music/rank_view.vue"),
       //   children: [
       //     {
       //       path: "",

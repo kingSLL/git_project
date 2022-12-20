@@ -43,3 +43,6 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.el-pagination {
+  justify-content: center;
+}

@@ -22,7 +22,7 @@ import { useRouter, useRoute } from "vue-router";
 const list = [
   { name: "推荐", path: "/recommend" },
   { name: "排行榜", path: "/rank" },
-  { name: "歌单", path: "/" },
+  { name: "歌单", path: "/playlist" },
   { name: "主播电台", path: "/" },
   { name: "歌手", path: "/" },
   { name: "新碟上架", path: "/" },

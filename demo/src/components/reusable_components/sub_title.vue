@@ -26,7 +26,7 @@ defineProps({
   title: String,
   hasLogo: {
     type: Boolean,
-    default: () => true,
+    default: () => false,
   },
 });
 </script>

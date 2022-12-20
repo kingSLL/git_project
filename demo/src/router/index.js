@@ -13,15 +13,10 @@ const router = createRouter({
     {
       path: "/rank",
       component: () => import("@/views/discover_music/rank_view.vue"),
-      //   children: [
-      //     {
-      //       path: "",
-      //       component: () =>
-      //         import(
-      //           "@/components/discove_music/pages/Ranking/content/right_content/right_content.vue"
-      //         ),
-      //     },
-      //   ],
+    },
+    {
+      path: "/playlist",
+      component: () => import("@/views/discover_music/playlist_view.vue"),
     },
   ],
 });

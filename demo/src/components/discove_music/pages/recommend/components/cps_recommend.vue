@@ -1,6 +1,6 @@
 <!-- ==========template=============-->
 <template>
-  <div class="contents">
+  <div class="cps_recommand">
     <major-content class="left"></major-content>
     <minor-content class="right"></minor-content>
   </div>
@@ -12,12 +12,8 @@ import MinorContent from "./content/right_content/minor_content.vue";
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>
-.contents {
-  width: 980px;
-  box-sizing: border-box;
-  margin: 0 auto;
+.cps_recommand {
   display: flex;
-  background-color: #ffffff;
   .left {
     width: 729px;
   }

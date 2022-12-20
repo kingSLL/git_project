@@ -1,7 +1,7 @@
 <!-- ==========template=============-->
 <template>
   <div class="hot_picks">
-    <sub-title :title="title">
+    <sub-title :title="title" :hasLogo="true">
       <template #mid>
         <ul>
           <template v-for="(item, index) in list" :key="index">

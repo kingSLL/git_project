@@ -1,7 +1,7 @@
 <!-- ==========template=============-->
 <template>
   <div class="top_sub">
-    <sub-title :title="title" :hasLogo="hasLogo">
+    <sub-title :title="title">
       <template #mid>
         <p class="songs">{{ info.trackCount }}首歌</p>
       </template>
@@ -25,11 +25,12 @@
       <template v-for="(item, index) in info.tracks" :key="item.id">
         <div class="row">
           <div class="index">{{ index + 1 }}</div>
-          <div class="title">
+          <div class="title text_over">
             <template v-if="index + 1 < 4">
               <img :src="item.al.picUrl" style="width: 50px; height: 50px" />
             </template>
             <i class="iconfont">&#xe624;</i>
+
             <span class="sing_name clickable"> {{ item.name }}</span>
 
             <template v-if="item.alia.length > 0 && !item.tns">
@@ -51,7 +52,6 @@
 import SubTitle from "multiplexing/sub_title.vue";
 
 const title = "歌曲列表";
-const hasLogo = false;
 defineProps({
   info: {
     type: Object,
@@ -90,10 +90,6 @@ defineProps({
       display: flex;
       align-items: center;
       column-gap: 10px;
-
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
       .sing_name {
       }
       .additional {

@@ -2,7 +2,9 @@
 <template>
   <div class="home">
     <discover-nav-bar></discover-nav-bar>
-    <router-view></router-view>
+    <div class="contant">
+      <router-view></router-view>
+    </div>
     <footer-cps></footer-cps>
   </div>
 </template>
@@ -12,4 +14,11 @@ import DiscoverNavBar from "@/components/discove_music/navigation_bar/discover_n
 import footerCps from "@/components/discove_music/footer/footer_cps.vue";
 </script>
 <!-- ============style============== -->
-<style scoped></style>
+<style scoped>
+.contant {
+  width: 980px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  background-color: #ffffff;
+}
+</style>

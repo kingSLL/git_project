@@ -1,7 +1,7 @@
 <!-- ==========template=============-->
 <template>
   <div class="song_list">
-    <sub-title :title="title"></sub-title>
+    <sub-title :title="title" :hasLogo="true"></sub-title>
 
     <div class="container">
       <template v-for="item in listName" :key="item.id">
@@ -30,7 +30,7 @@
                 >
                   <li>
                     <span class="index">{{ index + 1 }}</span>
-                    <span class="name">
+                    <span class="name text_over">
                       <a class="clickable">
                         {{ song.name }}
                       </a>

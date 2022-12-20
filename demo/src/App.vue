@@ -1,5 +1,5 @@
 <script setup>
-import HomeView from "./views/发现音乐/homeView.vue";
+import HomeView from "./views/discover_music/homeView.vue";
 import NavBar from "./components/nav_bar.vue";
 </script>
 <template>

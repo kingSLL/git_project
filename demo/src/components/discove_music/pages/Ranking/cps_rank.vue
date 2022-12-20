@@ -1,6 +1,6 @@
 <!-- ==========template=============-->
 <template>
-  <div class="content">
+  <div class="cps_rank">
     <left-content :name-list="namelist"></left-content>
 
     <right-content
@@ -48,12 +48,7 @@ rankStore.getRankNameList.then((res) => {
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>
-.content {
-  width: 980px;
-  box-sizing: border-box;
-  margin: 0 auto;
+.cps_rank {
   display: flex;
-  justify-content: space-between;
-  background-color: #ffffff;
 }
 </style>

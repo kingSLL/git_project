@@ -1,7 +1,7 @@
 <!-- ==========template=============-->
 <template>
   <div class="new_disc">
-    <sub-title :title="title"></sub-title>
+    <sub-title :title="title" :hasLogo="true"></sub-title>
     <div class="container">
       <div class="pre">
         <i class="iconfont">&#xe659;</i>

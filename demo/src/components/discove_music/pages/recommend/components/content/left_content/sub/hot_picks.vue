@@ -3,13 +3,7 @@
   <div class="hot_picks">
     <sub-title :title="title" :hasLogo="true">
       <template #mid>
-        <ul>
-          <template v-for="(item, index) in list" :key="index">
-            <li>
-              <a class="clickable"> {{ item }} </a>
-            </li>
-          </template>
-        </ul>
+        <categories-cps :list="list"></categories-cps>
       </template>
     </sub-title>
     <div class="container">
@@ -31,6 +25,7 @@
 <script setup>
 import { ref } from "vue";
 import SubTitle from "multiplexing/sub_title.vue";
+import CategoriesCps from "multiplexing/categories_cps.vue";
 const list = ref(["华语", "流行", "摇滚", "民谣", "电子"]);
 const title = "热门歌曲";
 </script>

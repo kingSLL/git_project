@@ -19,7 +19,7 @@
       </template>
     </div>
     <div class="bottom">
-      <categories :list="list" :showlist="true" class="categories"></categories>
+      <categories :list="list" class="categories"></categories>
       <p>
         <a>廉正举报</a> 不良信息举报邮箱: 51jubao@service.netease.com
         客服热线：95163298
@@ -38,16 +38,16 @@
 </template>
 <!-- ===========script============== -->
 <script setup>
-import categories from "@/components/reusable_components/categories_cps.vue";
+import categories from "multiplexing/categories_cps.vue";
 import { ref } from "vue";
 const list = [
-  "服务条款",
-  "隐私政策",
-  "儿童隐私政策",
-  "版权投诉",
-  "投资者关系",
-  "广告合作",
-  "联系我们",
+  { name: "服务条款" },
+  { name: "隐私政策" },
+  { name: "儿童隐私政策" },
+  { name: "版权投诉" },
+  { name: "投资者关系" },
+  { name: "广告合作" },
+  { name: "联系我们" },
 ];
 const iconlist = [
   {

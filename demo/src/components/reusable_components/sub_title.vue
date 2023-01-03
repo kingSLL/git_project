@@ -39,6 +39,7 @@ defineProps({
   .content {
     height: 100%;
     display: flex;
+    position: relative;
     align-items: center;
     .logo {
       width: 33px;

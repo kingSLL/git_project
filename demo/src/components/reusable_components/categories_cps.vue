@@ -1,10 +1,10 @@
 <!-- ==========template=============-->
 <template>
   <div class="categories_cps">
-    <ul v-if="showlist">
+    <ul>
       <template v-for="(item, index) in list" :key="index">
         <li>
-          <a class="clickable"> {{ item }} </a>
+          <a class="clickable"> {{ item.name }} </a>
         </li>
       </template>
     </ul>
@@ -17,10 +17,6 @@ defineProps({
     type: Array,
     default: () => [],
   },
-  showlist: {
-    type: Boolean,
-    default: false,
-  },
 });
 </script>
 <!-- ============style============== -->
@@ -28,17 +24,14 @@ defineProps({
 .categories_cps {
   ul {
     display: flex;
-
-    margin-left: 20px;
+    flex-wrap: wrap;
+    row-gap: 10px;
     li {
       a {
         padding: 0 10px;
         color: #666666;
         border-right: 1px #666666 solid;
       }
-    }
-    li:first-of-type a {
-      padding-left: 0;
     }
     li:last-of-type a {
       border: none;

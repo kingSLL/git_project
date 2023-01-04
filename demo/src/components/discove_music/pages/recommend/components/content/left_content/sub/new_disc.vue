@@ -8,17 +8,12 @@
       </div>
       <div class="mid">
         <template v-for="item in albums" :key="item.id">
-          <div class="album">
-            <div class="img_div mask">
-              <img :src="item?.picUrl" alt="" />
-              <div class="effect mask"></div>
-            </div>
-
-            <div class="details">
-              <p class="song_title clickable">{{ item.name }}</p>
-              <p class="author clickable">{{ item.artist.name }}</p>
-            </div>
-          </div>
+          <icon-cps
+            :name="item?.name"
+            :author="item.artist.name"
+            :picUrl="item?.picUrl"
+            height="100px"
+          ></icon-cps>
         </template>
       </div>
       <div class="next">
@@ -31,6 +26,7 @@
 <script setup>
 import { ref } from "vue";
 import SubTitle from "multiplexing/sub_title.vue";
+import IconCps from "multiplexing/icon_cps.vue";
 import http from "@/service";
 
 const albums = ref([]);
@@ -74,34 +70,6 @@ const title = "新碟上架";
       overflow: hidden;
       column-gap: 27px;
       overflow-x: auto;
-      .album {
-        .img_div {
-          position: relative;
-          img {
-            height: 100px;
-          }
-          .effect {
-            top: 0;
-            position: absolute;
-            width: 120px;
-            height: 100px;
-            background-position-x: 0px;
-            background-position-y: -570px;
-          }
-        }
-
-        .details {
-          width: 100px;
-          color: #666;
-          margin-top: 5px;
-          overflow: hidden;
-          .song_title {
-            display: inline-block;
-            white-space: nowrap;
-            margin-bottom: 5px;
-          }
-        }
-      }
     }
   }
 }

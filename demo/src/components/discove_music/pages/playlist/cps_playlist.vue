@@ -17,8 +17,15 @@
       </template>
     </sub-title>
     <div class="grid">
-      <template v-for="(item, index) in 100" :key="index">
-        <div>{{ item }}-{{ current_page }}</div>
+      <template v-for="item in playlist" :key="item.id">
+        <div class="box">
+          <icon-cps
+            :name="item?.name"
+            :picUrl="item.coverImgUrl"
+            :author="item.creator.nickname"
+            height="140px"
+          ></icon-cps>
+        </div>
       </template>
     </div>
     <div class="pagination">
@@ -37,6 +44,7 @@
 <!-- ===========script============== -->
 <script setup>
 import SubTitle from "multiplexing/sub_title.vue";
+import IconCps from "multiplexing/icon_cps.vue";
 import TileSub_cps from "./title_subCps.vue";
 import { ref } from "vue";
 import { ArrowDown } from "@element-plus/icons-vue";
@@ -65,6 +73,10 @@ http.get("playlist/catlist").then((res) => {
   }
 });
 
+const playlist = ref([]);
+http.get("top/playlist").then((res) => {
+  playlist.value = res.data.playlists;
+});
 const active = ref(false);
 function isClick() {
   active.value = !active.value;

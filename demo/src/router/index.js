@@ -18,6 +18,16 @@ const router = createRouter({
       path: "/playlist",
       component: () => import("@/views/discover_music/playlist_view.vue"),
     },
+    {
+      path: "/dj",
+      component: () => import("@/views/discover_music/dj_view.vue"),
+      children: [
+        {
+          path: "",
+          component: () => import("pages/dj/home/cps_dj_home.vue"),
+        },
+      ],
+    },
   ],
 });
 

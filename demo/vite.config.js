@@ -25,6 +25,9 @@ export default defineConfig({
       multiplexing: fileURLToPath(
         new URL("./src/components/reusable_components", import.meta.url)
       ),
+      pages: fileURLToPath(
+        new URL("./src/components/discove_music/pages", import.meta.url)
+      ),
     },
   },
 });

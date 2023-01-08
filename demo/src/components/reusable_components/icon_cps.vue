@@ -16,7 +16,7 @@
 </template>
 <!-- ===========script============== -->
 <script setup>
-const props = defineProps({
+defineProps({
   picUrl: String,
   name: String,
   author: String,
@@ -25,7 +25,6 @@ const props = defineProps({
     defualt: "100px",
   },
 });
-console.log(props.height);
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>
@@ -33,13 +32,13 @@ console.log(props.height);
   .img_div {
     position: relative;
     img {
-      height: var(height);
+      height: 100px;
     }
     .effect {
       top: 0;
       position: absolute;
       width: 120px;
-      height: var(height);
+      height: 100px;
       background-position-x: 0px;
       background-position-y: -570px;
     }

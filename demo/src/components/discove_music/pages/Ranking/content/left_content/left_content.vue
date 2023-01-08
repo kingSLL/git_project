@@ -43,7 +43,7 @@ function changedIndex(index) {
     path: "/rank",
     query: { id: props.nameList[rankStore.currRankIndex].id },
   });
-} 
+}
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>
@@ -78,7 +78,7 @@ function changedIndex(index) {
           }
         }
         .active {
-          background-color: #e6e6e6;
+          background-color: #e6e6e6 !important;
         }
         &:first-of-type:before,
         &:nth-of-type(4)::after {

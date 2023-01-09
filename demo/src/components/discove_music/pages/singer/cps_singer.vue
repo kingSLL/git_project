@@ -1,16 +1,18 @@
 <!-- ==========template=============-->
 <template>
-  <div class="rank">
-    <content class="text_content"></content>
+  <div class="cps_singer">
+    <singer-l></singer-l>
+    <singer-r></singer-r>
   </div>
 </template>
 <!-- ===========script============== -->
 <script setup>
-import content from "pages/Ranking/cps_rank.vue";
+import SingerL from "./left/singer_L_cps.vue";
+import SingerR from "./right/singer_R_cps.vue";
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>
-.rank {
-  background-color: #f5f5f5;
+.cps_singer {
+  display: flex;
 }
 </style>

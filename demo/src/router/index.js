@@ -24,9 +24,21 @@ const router = createRouter({
       children: [
         {
           path: "",
-          component: () => import("pages/dj/home/cps_dj_home.vue"),
+          component: () => import("pages/dj/router/cps_dj_home.vue"),
+        },
+        {
+          path: "category",
+          component: () => import("pages/dj/router/cps_dj_other.vue"),
         },
       ],
+    },
+    {
+      path: "/artist",
+      component: () => import("@/views/discover_music/singer_view.vue"),
+    },
+    {
+      path: "/album",
+      component: () => import("@/views/discover_music/album_view.vue"),
     },
   ],
 });

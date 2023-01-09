@@ -1,12 +1,12 @@
 <!-- ==========template=============-->
 <template>
-  <div class="playlist">
-    <content class="text_content"></content>
+  <div class="singer">
+    <contant class="text_content"></contant>
   </div>
 </template>
 <!-- ===========script============== -->
 <script setup>
-import content from "pages/playlist/cps_playlist.vue";
+import contant from "pages/singer/cps_singer.vue";
 </script>
 <!-- ============style============== -->
 <style scoped></style>

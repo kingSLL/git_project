@@ -48,7 +48,6 @@ function changedIndex(index) {
 <!-- ============style============== -->
 <style lang="less" scoped>
 .left_content {
-  border-left: 1px solid #dfdfdf;
   border-right: 1px solid #dfdfdf;
   .container {
     margin-top: 20px;

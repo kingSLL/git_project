@@ -28,23 +28,14 @@
         </div>
       </template>
     </div>
-    <div class="pagination">
-      <el-pagination
-        hide-on-single-page
-        layout="prev, pager, next"
-        :page-size="1"
-        :pager-count="9"
-        :background="true"
-        :total="total_page"
-        v-model:current-page="current_page"
-      />
-    </div>
+    <pagination-cps></pagination-cps>
   </div>
 </template>
 <!-- ===========script============== -->
 <script setup>
 import SubTitle from "multiplexing/sub_title.vue";
 import IconCps from "multiplexing/icon_cps.vue";
+import PaginationCps from "multiplexing/pagination_cps.vue";
 import TileSub_cps from "./title_subCps.vue";
 import { ref } from "vue";
 import { ArrowDown } from "@element-plus/icons-vue";
@@ -52,13 +43,10 @@ import { filter, toArray } from "lodash";
 import http from "@/service";
 
 const title = ref("全部");
-const current_page = ref(0);
-const total_page = ref(10);
 
 const original_list = ref([]);
 const categories = ref([]);
 const categories_list = ref([]);
-// watch(current_page, (curr) => {});
 
 http.get("playlist/catlist").then((res) => {
   const temp_categories = res.data.categories;

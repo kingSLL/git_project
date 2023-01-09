@@ -26,7 +26,13 @@
 import { ref } from "vue";
 import SubTitle from "multiplexing/sub_title.vue";
 import CategoriesCps from "multiplexing/categories_cps.vue";
-const list = ref(["华语", "流行", "摇滚", "民谣", "电子"]);
+const list = ref([
+  { name: "华语" },
+  { name: "流行" },
+  { name: "摇滚" },
+  { name: "民谣" },
+  { name: "电子" },
+]);
 const title = "热门歌曲";
 </script>
 <!-- ============style============== -->

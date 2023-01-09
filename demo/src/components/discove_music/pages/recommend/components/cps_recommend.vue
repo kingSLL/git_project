@@ -15,7 +15,7 @@ import MinorContent from "./content/right_content/minor_content.vue";
 .cps_recommand {
   display: flex;
   .left {
-    width: 729px;
+    width: 730px;
   }
 }
 </style>

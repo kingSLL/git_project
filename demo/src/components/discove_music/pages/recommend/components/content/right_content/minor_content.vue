@@ -14,10 +14,8 @@
 <!-- ============style============== -->
 <style lang="less" scoped>
 .minor {
-  width: 100%;
   box-sizing: border-box;
-  border: 1px solid #dfdfdf;
-  border-bottom: none;
+  border-left: 1px solid #dfdfdf;
   .top {
     background-color: #ededed;
     border-bottom: 1px solid #bbbbbb;

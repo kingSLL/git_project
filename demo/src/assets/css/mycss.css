@@ -6,6 +6,10 @@
   background: url(https://s2.music.126.net/style/web2/img/icon.png?a0a6e91b7da4706eb5237ab7fa9e3c5f)
     no-repeat 0 9999px;
 }
+.u-icon-play {
+  background: url(https://s2.music.126.net/style/web2/img/iconall.png?9a58c0a6e81770391548cd143c9932e7)
+    no-repeat 0 9999px;
+}
 .text_content {
   max-width: 980px;
   margin: 0 auto;

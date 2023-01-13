@@ -67,7 +67,7 @@ const title = "热门歌曲";
     grid-template-rows: 1fr 1fr;
     justify-content: space-between;
     column-gap: 42px;
-    margin: 30px 0;
+    margin-bottom: 30px;
     .grid {
       background-color: aquamarine;
       padding-bottom: 30px;

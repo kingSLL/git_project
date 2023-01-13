@@ -11,12 +11,9 @@
       <div class="categories">
         <slot name="mid"> </slot>
       </div>
-      <slot name="right">
-        <div class="more">
-          <a class="clickable">更多</a>
-          <i class="iconfont">&#xeb08;</i>
-        </div>
-      </slot>
+      <div class="more">
+        <slot name="right"> </slot>
+      </div>
     </div>
   </div>
 </template>
@@ -33,8 +30,8 @@ defineProps({
 <!-- ============style============== -->
 <style lang="less" scoped>
 .subtitle {
-  // padding: 0 10px 0 34px;
-
+  padding-bottom: 15px;
+  margin-bottom: 22px;
   border-bottom: 2px solid #c10c0d;
   .content {
     height: 100%;
@@ -57,10 +54,6 @@ defineProps({
       flex-grow: 1;
     }
     .more {
-      color: #666666;
-      i {
-        color: #c10c0d;
-      }
     }
   }
 }

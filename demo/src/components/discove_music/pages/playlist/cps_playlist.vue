@@ -20,10 +20,13 @@
       <template v-for="item in playlist" :key="item.id">
         <div class="box">
           <icon-cps
-            :name="item?.name"
-            :picUrl="item.coverImgUrl"
-            :author="item.creator.nickname"
-            height="140px"
+            :info="{
+              name: item?.name,
+              picUrl: item.coverImgUrl,
+              author: item.creator.nickname,
+            }"
+            :size="{ w: '140px', h: '140px' }"
+            img_type="icon_140"
           ></icon-cps>
         </div>
       </template>
@@ -76,7 +79,9 @@ function isClick() {
   padding: 40px;
   .grid {
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 50px;
+    row-gap: 30px;
   }
   .pagination {
     margin: 40px;

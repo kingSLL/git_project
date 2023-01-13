@@ -72,6 +72,7 @@ defineProps({
   width: 670px;
   border: 1px solid #d9d9d9;
   box-sizing: border-box;
+  margin-top: -22px;
   .row {
     display: flex;
     align-items: center;

@@ -109,7 +109,6 @@ async function getHttp() {
     background-color: #f4f4f4;
     border: 1px solid #d2d2d2;
     box-sizing: border-box;
-    margin-top: 20px;
     .text {
       flex-grow: 1;
       border-right: 1px solid #d2d2d2;

@@ -52,7 +52,6 @@ function change(index) {
   .index {
     display: flex;
     text-align: center;
-    margin-top: 20px;
     span {
       flex-grow: 1;
       width: 45px;

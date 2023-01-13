@@ -9,10 +9,13 @@
       <div class="mid">
         <template v-for="item in albums" :key="item.id">
           <icon-cps
-            :name="item?.name"
-            :author="item.artist.name"
-            :picUrl="item?.picUrl"
-            height="100px"
+            :info="{
+              name: item?.name,
+              author: item.artist.name,
+              picUrl: item?.picUrl,
+            }"
+            :size="{ w: '100px', h: '100px' }"
+            img_type="small_album"
           ></icon-cps>
         </template>
       </div>
@@ -54,7 +57,6 @@ const title = "新碟上架";
     border: 1px solid #d3d3d3;
     display: flex;
     align-items: center;
-    margin-top: 10px;
     padding: 10px;
     .pre {
       padding-right: 5px;

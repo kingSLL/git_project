@@ -23,12 +23,11 @@
 <script setup>
 import CategoriesCps from "multiplexing/categories_cps.vue";
 import { CoffeeCup } from "@element-plus/icons-vue";
-const props = defineProps({
+defineProps({
   list: Array,
   categories: Array,
   active: Boolean,
 });
-console.log(props.active);
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>

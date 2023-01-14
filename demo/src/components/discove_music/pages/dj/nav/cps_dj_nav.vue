@@ -1,22 +1,27 @@
 <!-- ==========template=============-->
 <template>
   <div class="dj_nav">
-    <div class="pre">
+    <div class="pre clickableWithoutLine">
       <i class="iconfont">&#xe659;</i>
     </div>
     <div class="box">
-      <template v-for="(item, index) in 18" :key="index">
-        <div class="info">
-          <i class="iconfont">&#xe891;</i>
-          <div class="name">{{ item }}</div>
+      <template v-for="categorie in categories" :key="categorie?.id">
+        <div class="info clickableWithoutLine">
+          <i
+            class="icon"
+            :style="{
+              backgroundImage: `url(${categorie?.picWebUrl})`,
+            }"
+          ></i>
+          <p class="name">{{ categorie?.name }}</p>
         </div>
       </template>
     </div>
-    <div class="next">
+    <div class="next clickableWithoutLine">
       <i class="iconfont">&#xe62d;</i>
     </div>
 
-    <div class="indicator">
+    <div class="indicator clickableWithoutLine">
       <template v-for="(item, index) in 2" :key="index">
         <div
           @click="changeIndex(index)"
@@ -29,11 +34,17 @@
 <!-- ===========script============== -->
 <script setup>
 import { ref } from "vue";
-
+import http from "@/service";
 const currindex = ref(0);
+const categories = ref([]);
+getNav();
 function changeIndex(index) {
-  console.log(index);
   currindex.value = index;
+}
+
+async function getNav() {
+  const request = await http.get("dj/catelist");
+  categories.value = request.data.categories;
 }
 </script>
 <!-- ============style============== -->
@@ -53,7 +64,15 @@ function changeIndex(index) {
     column-gap: 20px;
     justify-items: center;
     .info {
-      background-color: lightblue;
+      text-align: center;
+      .icon {
+        display: inline-block;
+        width: 48px;
+        height: 48px;
+      }
+      .name {
+        color: #999999;
+      }
     }
   }
   .indicator {

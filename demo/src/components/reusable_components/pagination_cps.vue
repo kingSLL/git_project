@@ -22,4 +22,8 @@ const total_page = ref(10);
 // watch(current_page, (curr) => {});
 </script>
 <!-- ============style============== -->
-<style scoped></style>
+<style lang="less" scoped>
+.pagination {
+  margin: 20px 0;
+}
+</style>

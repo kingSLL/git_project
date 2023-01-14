@@ -7,11 +7,11 @@
         <i class="iconfont">&#xe659;</i>
       </div>
       <div class="mid">
-        <template v-for="item in albums" :key="item.id">
+        <template v-for="item in albums" :key="item?.id">
           <icon-cps
             :info="{
               name: item?.name,
-              author: item.artist.name,
+              author: item?.artist?.name,
               picUrl: item?.picUrl,
             }"
             :size="{ w: '100px', h: '100px' }"
@@ -30,21 +30,14 @@
 import { ref } from "vue";
 import SubTitle from "multiplexing/sub_title.vue";
 import IconCps from "multiplexing/icon_cps.vue";
-import http from "@/service";
+import { userAlbumStore } from "@/Storage";
 
 const albums = ref([]);
-http
-  .get("album/newest")
-  .then((res) => {
-    albums.value = res.data.albums;
-    let total = 10;
-    if (albums.value.length > total) {
-      albums.value.splice(total, albums.value.length - total);
-    }
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+const albumStore = userAlbumStore();
+getAlbum();
+async function getAlbum() {
+  albums.value = await albumStore.getAlbumNew(10);
+}
 const title = "新碟上架";
 </script>
 <!-- ============style============== -->
@@ -70,7 +63,7 @@ const title = "新碟上架";
       flex-grow: 1;
       display: flex;
       overflow: hidden;
-      column-gap: 27px;
+      column-gap: 10px;
       overflow-x: auto;
     }
   }

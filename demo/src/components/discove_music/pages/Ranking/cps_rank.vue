@@ -36,11 +36,11 @@ async function getinfo(u_id) {
     u_id = namelist.value[rankStore.currRankIndex].id;
   }
   rankStore.currInfoId = u_id;
-  const tempinfo = await rankStore.getRankInfo;
+  const tempinfo = await rankStore.getRankInfo();
   info.value = tempinfo.value.playlist;
 }
 
-rankStore.getRankNameList.then((res) => {
+rankStore.getRankNameList().then((res) => {
   namelist.value = res;
   rankStore.currInfoId = namelist.value[rankStore.currRankIndex].id;
   getinfo(rankStore.currInfoId);

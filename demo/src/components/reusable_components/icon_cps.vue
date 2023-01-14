@@ -2,7 +2,7 @@
 <template>
   <div class="icon">
     <div class="album">
-      <div class="img_div">
+      <div class="img_div" :style="[{ width: effW }, { height: size.h }]">
         <img
           :src="info?.picUrl"
           :style="[{ width: size.w }, { height: size.h }]"
@@ -10,15 +10,11 @@
         <div
           class="effect mask"
           :style="[
-            { width: effW },
-            { height: size.h },
-
             { backgroundPositionX: imgPos.x },
             { backgroundPositionY: imgPos.y },
           ]"
         ></div>
         <a
-          v-show="true"
           class="u-icon-play paly"
           :style="[
             { width: paly_size },
@@ -46,6 +42,10 @@ const props = defineProps({
   info: Object,
   size: Object,
   img_type: String,
+  isPalyHover: {
+    type: Boolean,
+    default: false,
+  },
 });
 const imgPos = reactive({});
 const paly_imgPos = reactive({});
@@ -111,11 +111,20 @@ switch (props.img_type) {
     .effect {
       top: 0;
       position: absolute;
+      width: 100%;
+      height: 100%;
     }
     .paly {
+      display: none;
       position: absolute;
-      bottom: 0;
-      right: 0;
+      bottom: 0px;
+      right: 0px;
+      transform: translate(-100%, -10%);
+    }
+    &:hover {
+      .paly {
+        display: block;
+      }
     }
   }
 
@@ -128,6 +137,8 @@ switch (props.img_type) {
       display: inline-block;
       white-space: nowrap;
       margin-bottom: 5px;
+      font-size: 14px;
+      color: #000;
     }
   }
 }

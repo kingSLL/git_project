@@ -70,7 +70,7 @@ async function getHttp() {
   let newList_song = [];
   let createList_song = [];
 
-  const toplist = await rankStore.getRankNameList;
+  const toplist = await rankStore.getRankNameList();
   const tempList = filter(toplist, (list) => {
     return ["飙升榜", "新歌榜", "原创榜"].includes(list.name);
   });

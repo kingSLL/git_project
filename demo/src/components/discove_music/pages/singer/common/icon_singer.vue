@@ -5,9 +5,13 @@
     <div class="box">
       <template v-for="(item, index) in 10" :key="index">
         <div class="singer">
-          <div class="icon">
-            <img src="" />
-          </div>
+          <icon-cps
+            img_type="icon_130"
+            :size="{ w: '130px', h: '130px' }"
+            :info="{
+              picUrl: singer?.img1v1Url,
+            }"
+          ></icon-cps>
           <div class="info">
             <span class="name">{{ item }}数九寒冬健康</span>
             <template v-if="true">
@@ -22,6 +26,7 @@
 <!-- ===========script============== -->
 <script setup>
 import SubTitle from "multiplexing/sub_title.vue";
+import IconCps from "multiplexing/icon_cps.vue";
 defineProps({
   title: String,
 });
@@ -37,11 +42,6 @@ defineProps({
     margin: 20px 0 30px 0;
     .singer {
       .icon {
-        height: 130px;
-        img {
-          width: 100%;
-          height: 100%;
-        }
       }
       .info {
         display: flex;

@@ -2,7 +2,7 @@
 <template>
   <div class="temp_singer">
     <sub-title :title="title"></sub-title>
-    <template v-if="true">
+    <template v-if="false">
       <div class="index">
         <template v-for="(item, index) in indexList" :key="index">
           <span
@@ -15,15 +15,19 @@
       </div>
     </template>
     <div class="box">
-      <template v-for="(item, index) in 100" :key="index">
+      <template v-for="(singer, index) in list" :key="singer?.id">
         <div class="singer">
           <template v-if="index < 10">
-            <div class="icon">
-              <img src="" />
-            </div>
+            <icon-cps
+              img_type="icon_130"
+              :size="{ w: '130px', h: '130px' }"
+              :info="{
+                picUrl: singer?.img1v1Url,
+              }"
+            ></icon-cps>
           </template>
           <div class="info">
-            <span class="name">{{ item }}数九寒冬健康</span>
+            <span class="name">{{ singer?.name }}</span>
             <template v-if="true">
               <i class="u-icon"></i>
             </template>
@@ -36,11 +40,13 @@
 <!-- ===========script============== -->
 <script setup>
 import SubTitle from "multiplexing/sub_title.vue";
+import IconCps from "multiplexing/icon_cps.vue";
 import { ref } from "vue";
 const currIndex = ref(0);
 const indexList = ref(["热门", "A", "B", "C", "其他"]);
 defineProps({
   title: String,
+  list: Array,
 });
 function change(index) {
   currIndex.value = index;
@@ -85,12 +91,6 @@ function change(index) {
       }
       &:nth-child(n + 1):nth-child(-n + 10) {
         .icon {
-          height: 130px;
-          background-color: aqua;
-          img {
-            width: 100%;
-            height: 100%;
-          }
         }
         .info {
           justify-content: space-between;

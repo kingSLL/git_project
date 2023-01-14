@@ -10,4 +10,8 @@
 import DjNav from "./nav/cps_dj_nav.vue";
 </script>
 <!-- ============style============== -->
-<style scoped></style>
+<style lang="less" scoped>
+.dj_cps {
+  padding: 40px;
+}
+</style>

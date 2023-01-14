@@ -2,17 +2,15 @@
 <template>
   <div class="subtitle">
     <div class="content">
-      <slot name="logo">
-        <div class="logo" v-if="hasLogo"></div>
-      </slot>
-      <slot name="title">
-        <h2>{{ title }}</h2>
-      </slot>
+      <div class="logo" v-if="hasLogo"></div>
+
+      <h2>{{ title }}</h2>
       <div class="categories">
         <slot name="mid"> </slot>
       </div>
       <div class="more">
         <slot name="right"> </slot>
+        <p v-if="hasMore">更多 <i class="iconfont"> &#xe62d;</i></p>
       </div>
     </div>
   </div>
@@ -25,6 +23,10 @@ defineProps({
     type: Boolean,
     default: () => false,
   },
+  hasMore: {
+    type: Boolean,
+    default: () => false,
+  },
 });
 </script>
 <!-- ============style============== -->
@@ -34,10 +36,9 @@ defineProps({
   margin-bottom: 22px;
   border-bottom: 2px solid #c10c0d;
   .content {
-    height: 100%;
     display: flex;
     position: relative;
-    align-items: center;
+    align-items: flex-end;
     .logo {
       width: 33px;
       height: 33px;
@@ -47,7 +48,7 @@ defineProps({
       background-position-y: -154px;
     }
     h2 {
-      font-size: 20px;
+      font-size: 24px;
       color: #333333;
     }
     .categories {

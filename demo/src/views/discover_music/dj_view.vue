@@ -9,8 +9,4 @@
 import content from "pages/dj/cps_dj.vue";
 </script>
 <!-- ============style============== -->
-<style lang="less" scoped>
-.dj {
-  padding: 40px;
-}
-</style>
+<style lang="less" scoped></style>

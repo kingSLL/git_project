@@ -7,10 +7,7 @@
         <li>
           <template v-if="hasRank">
             <div class="rankCore">
-              <span class="ranking">{{
-                formatNub(dj?.lastRank, dj?.rank)
-              }}</span>
-
+              <span class="ranking"> {{ formatNub(dj?.rank) }}</span>
               <div class="core">
                 <i
                   class="core_icon u-icon"
@@ -53,8 +50,8 @@
 <script setup>
 import SubTitle from "multiplexing/sub_title.vue";
 import { padStart } from "lodash";
-import { ref } from "vue";
-defineProps({
+import { ref, watch, computed } from "vue";
+const props = defineProps({
   title: String,
   list: Array,
   hasRank: {
@@ -62,27 +59,51 @@ defineProps({
     default: false,
   },
 });
-const rankPosX = ref({});
-const rankPosY = ref({});
+
+const last = ref(0);
+const nub = ref(0);
+watch(
+  () => props.list,
+  (newVal) => {
+    if (props.hasRank) {
+      newVal.forEach((item) => {
+        last.value = item.lastRank;
+        nub.value = item.rank;
+      });
+    }
+  }
+);
+const rankPosX = computed(() => {
+  console.log(last.value);
+  if (last.value < 0) {
+    return "-67px";
+  } else if (nub.value === 0) {
+    return "-74px";
+  } else if (nub.value > 0) {
+    return "-74px";
+  } else if (nub.value < 0) {
+    return "-74px";
+  } else return "";
+});
+
+const rankPosY = computed(() => {
+  console.log(last.value);
+
+  if (last.value < 0) {
+    return "-283px";
+  } else if (nub.value === 0) {
+    return "-274px";
+  } else if (nub.value > 0) {
+    return "-304px";
+  } else if (nub.value < 0) {
+    return "-324px";
+  } else return "";
+});
 
 function rankCore(last, curr) {
   return Math.abs(last - curr);
 }
-function formatNub(last, curr) {
-  let nub = last - curr;
-  if (last < 0) {
-    rankPosX.value = "-67px";
-    rankPosY.value = "-283px";
-  } else if (nub === 0) {
-    rankPosX.value = "-74px";
-    rankPosY.value = "-274px";
-  } else if (nub > 0) {
-    rankPosX.value = "-74px";
-    rankPosY.value = "-304px";
-  } else {
-    rankPosX.value = "-74px";
-    rankPosY.value = "-324px";
-  }
+function formatNub(curr) {
   return padStart(curr, 2, "0");
 }
 </script>

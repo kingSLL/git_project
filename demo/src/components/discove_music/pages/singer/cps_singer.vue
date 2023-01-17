@@ -1,14 +1,14 @@
 <!-- ==========template=============-->
 <template>
   <div class="cps_singer">
-    <singer-l></singer-l>
-    <singer-r></singer-r>
+    <singer-nav :area="singerArea" :type="singerType"></singer-nav>
+    <router-view></router-view>
   </div>
 </template>
 <!-- ===========script============== -->
 <script setup>
-import SingerL from "./left/singer_L_cps.vue";
-import SingerR from "./right/singer_R_cps.vue";
+import SingerNav from "./sub/singer_nav_cps.vue";
+import { singerType, singerArea } from "@/data";
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>

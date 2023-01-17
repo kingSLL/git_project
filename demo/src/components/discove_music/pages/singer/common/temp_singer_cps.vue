@@ -2,7 +2,7 @@
 <template>
   <div class="temp_singer">
     <sub-title :title="title"></sub-title>
-    <template v-if="false">
+    <template v-if="hasIndex">
       <div class="index">
         <template v-for="(item, index) in indexList" :key="index">
           <span
@@ -43,10 +43,26 @@ import SubTitle from "multiplexing/sub_title.vue";
 import IconCps from "multiplexing/icon_cps.vue";
 import { ref } from "vue";
 const currIndex = ref(0);
-const indexList = ref(["热门", "A", "B", "C", "其他"]);
+
+const indexList = ref([
+  "热门",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "其他",
+]);
 defineProps({
   title: String,
   list: Array,
+  hasIndex: { type: Boolean, default: false },
 });
 function change(index) {
   currIndex.value = index;
@@ -60,7 +76,6 @@ function change(index) {
     text-align: center;
     span {
       flex-grow: 1;
-      width: 45px;
       height: 24px;
       line-height: 24px;
     }
@@ -77,7 +92,7 @@ function change(index) {
     grid-template-columns: repeat(5, 1fr);
     row-gap: 10px;
     .singer {
-      padding-left: 17px;
+      // padding-left: 17px;
       &:nth-child(n + 1):nth-child(-n + 5) {
         padding-bottom: 20px;
       }

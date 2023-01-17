@@ -3,7 +3,7 @@
   <div class="categories_cps">
     <ul>
       <template v-for="(item, index) in list" :key="index">
-        <li>
+        <li @click="change(index)">
           <a class="clickable"> {{ item.name }} </a>
         </li>
       </template>
@@ -12,12 +12,20 @@
 </template>
 <!-- ===========script============== -->
 <script setup>
+import { ref } from "vue";
+
 defineProps({
   list: {
     type: Array,
     default: () => [],
   },
 });
+const currIndex = ref(0);
+const emit = defineEmits(["currIndex"]);
+function change(index) {
+  currIndex.value = index;
+  emit("currIndex", index);
+}
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>

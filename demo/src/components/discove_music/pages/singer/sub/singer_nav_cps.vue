@@ -1,14 +1,20 @@
 <!-- ==========template=============-->
 <template>
   <div class="singer_L">
-    <template v-for="(item, index) in 6" :key="index">
+    <template v-for="(item, index) in area" :key="index">
       <div class="singer_classify">
-        <h3>推荐{{ item }}</h3>
+        <h3>{{ Object.values(item)[0] }}</h3>
         <ul>
-          <template v-for="(singer, indey) in 2" :key="indey">
-            <li @click="chang" :class="{ active: tempFlag }">
-              <span class="temp">
-                {{ singer }}
+          <template v-for="(singer, indey) in type" :key="indey">
+            <li
+              @click="chang(index, indey)"
+              :class="{ active: currindex === index && currindey === indey }"
+            >
+              <span class="temp clickable">
+                {{ Object.values(item)[0]
+                }}{{
+                  index === 0 && indey === 0 ? "歌手" : Object.values(singer)[0]
+                }}
               </span>
             </li>
           </template>
@@ -20,11 +26,31 @@
 <!-- ===========script============== -->
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+const props = defineProps({
+  area: Array,
+  type: Array,
+});
 
-const tempFlag = ref(false);
-function chang() {
-  console.log(tempFlag.value);
-  tempFlag.value = !tempFlag.value;
+const currindex = ref(0);
+const currindey = ref(0);
+
+const router = useRouter();
+
+function chang(index, indey) {
+  currindex.value = index;
+  currindey.value = indey;
+  if (index > 0) {
+    router.push({
+      name: "cat",
+      query: {
+        area: Object.keys(props.area[currindex.value])[0],
+        type: Object.keys(props.type[currindey.value])[0],
+      },
+    });
+  } else {
+    router.push({ name: "signed" });
+  }
 }
 </script>
 <!-- ============style============== -->
@@ -63,6 +89,16 @@ function chang() {
     }
     &:last-of-type {
       border: none;
+    }
+    &:first-child {
+      ul {
+        li {
+          display: none;
+        }
+        li:first-child {
+          display: block;
+        }
+      }
     }
   }
 }

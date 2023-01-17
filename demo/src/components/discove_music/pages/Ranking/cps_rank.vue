@@ -5,6 +5,7 @@
 
     <right-content
       :rankName="namelist[rankStore.currRankIndex]"
+      :song-list="tracks"
       :info="info"
     ></right-content>
   </div>
@@ -21,6 +22,7 @@ import { useRoute } from "vue-router";
 const rankStore = userRankStore();
 
 const namelist = ref([]);
+const tracks = ref([]);
 const info = ref({});
 const route = useRoute();
 
@@ -38,6 +40,7 @@ async function getinfo(u_id) {
   rankStore.currInfoId = u_id;
   const tempinfo = await rankStore.getRankInfo();
   info.value = tempinfo.value.playlist;
+  tracks.value = tempinfo.value.playlist.tracks;
 }
 
 rankStore.getRankNameList().then((res) => {

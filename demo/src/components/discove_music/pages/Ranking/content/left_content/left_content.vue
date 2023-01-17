@@ -40,7 +40,7 @@ function changedIndex(index) {
   rankStore.currRankIndex = index;
 
   router.push({
-    path: "/rank",
+    path: "/discover_music/rank",
     query: { id: props.nameList[rankStore.currRankIndex].id },
   });
 }

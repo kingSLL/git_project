@@ -39,6 +39,7 @@ defineProps({
   border-radius: 5px;
   left: 0;
   top: 35px;
+  z-index: 99;
   .categories_box {
     .all {
       height: 69px;

@@ -1,15 +1,15 @@
 <!-- ==========template=============-->
 <template>
-  <div class="top_sub">
+  <div class="song_list">
     <sub-title :title="title">
       <template #mid>
-        <p class="songs">{{ info.trackCount }}首歌</p>
+        <p class="songs">{{ songList?.langth }}首歌</p>
       </template>
       <template #right>
         <p style="color: #666">
           播放:
           <span style="color: #c20b0d; font-weight: bold">{{
-            info.playCount
+            info?.playCount
           }}</span>
           次
         </p>
@@ -22,26 +22,26 @@
         <span class="duration">时长</span>
         <span class="singer">歌手</span>
       </div>
-      <template v-for="(item, index) in info.tracks" :key="item.id">
+      <template v-for="(song, index) in songList" :key="song.id">
         <div class="row">
           <div class="index">{{ index + 1 }}</div>
           <div class="title text_over">
-            <template v-if="index + 1 < 4">
-              <img :src="item.al.picUrl" style="width: 50px; height: 50px" />
+            <template v-if="index + 1 < 4 && hasIcon">
+              <img :src="song?.al.picUrl" style="width: 50px; height: 50px" />
             </template>
             <i class="iconfont">&#xe624;</i>
 
-            <span class="sing_name clickable"> {{ item.name }}</span>
+            <span class="sing_name clickable"> {{ song?.name }}</span>
 
-            <template v-if="item.alia.length > 0 && !item.tns">
-              <span class="additional">-({{ item.alia[0] }})</span>
+            <template v-if="song?.alia.length > 0 && !song?.tns">
+              <span class="additional">-({{ song?.alia[0] }})</span>
             </template>
-            <template v-if="item.tns?.length > 0">
-              <span class="additional">-({{ item.tns[0] }})</span>
+            <template v-else-if="song?.tns?.length > 0">
+              <span class="additional">-({{ song?.tns[0] }})</span>
             </template>
           </div>
           <div class="duration">02:56</div>
-          <div class="singer clickable">{{ item.ar[0].name }}</div>
+          <div class="singer clickable">{{ song?.ar[0].name }}</div>
         </div>
       </template>
     </div>
@@ -50,19 +50,20 @@
 <!-- ===========script============== -->
 <script setup>
 import SubTitle from "multiplexing/sub_title.vue";
-
-const title = "歌曲列表";
-defineProps({
-  info: {
-    type: Object,
-    default: () => {},
+const props = defineProps({
+  info: Object,
+  songList: Array,
+  title: String,
+  hasIcon: {
+    type: Boolean,
+    default: false,
   },
 });
+console.log(props.songList);
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>
 .subtitle {
-  height: 35px;
   .songs {
     margin: 10px 0 0 40px;
     color: #666;

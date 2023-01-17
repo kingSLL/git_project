@@ -3,11 +3,11 @@
   <div class="right_content">
     <div class="cnt">
       <div class="cover">
-        <img :src="info.coverImgUrl" alt="" />
+        <img :src="info?.coverImgUrl" alt="" />
         <div class="mask"></div>
       </div>
       <div class="info">
-        <div class="rankName">{{ info.name }}</div>
+        <div class="rankName">{{ info?.name }}</div>
         <div class="time">
           <span class="iconfont"> &#xe74f;</span>
           <span class="recent">最近更新： {{ getTime }}</span>
@@ -30,7 +30,7 @@
 
           <el-button>
             <el-icon><FolderAdd /></el-icon>
-            ({{ info.subscribedCount }})
+            ({{ info?.subscribedCount }})
           </el-button>
           <el-button>
             <el-icon><Share /></el-icon>
@@ -47,13 +47,18 @@
         </div>
       </div>
     </div>
-    <top-sub :info="info"></top-sub>
+    <song-list
+      title="歌曲列表"
+      :songList="songList"
+      :info="info"
+      :hasIcon="true"
+    ></song-list>
   </div>
 </template>
 <!-- ===========script============== -->
 <script setup>
 import { computed } from "vue";
-import TopSub from "./sub/top_sub.vue";
+import SongList from "multiplexing/song_list.vue";
 import * as dayjs from "dayjs";
 import {
   Plus,
@@ -65,11 +70,12 @@ import {
 } from "@element-plus/icons-vue";
 // =============================
 const getTime = computed(() => {
-  return dayjs(props.info.trackUpdateTime).format("MM月DD天");
+  return dayjs(props.info?.trackUpdateTime).format("MM月DD天");
 });
 
 const props = defineProps({
   info: Object,
+  songList: Array,
   rankName: Object,
 });
 </script>

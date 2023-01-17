@@ -20,12 +20,12 @@
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 const list = [
-  { name: "推荐", path: "/recommend" },
-  { name: "排行榜", path: "/rank" },
-  { name: "歌单", path: "/playlist" },
-  { name: "主播电台", path: "/dj" },
-  { name: "歌手", path: "/artist" },
-  { name: "新碟上架", path: "/album" },
+  { name: "推荐", path: "/discover_music/recommend" },
+  { name: "排行榜", path: "/discover_music/rank" },
+  { name: "歌单", path: "/discover_music/playlist" },
+  { name: "主播电台", path: "/discover_music/dj" },
+  { name: "歌手", path: "/discover_music/artist" },
+  { name: "新碟上架", path: "/discover_music/album" },
 ];
 
 const router = useRouter();

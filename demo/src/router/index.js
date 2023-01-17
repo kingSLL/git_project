@@ -3,23 +3,23 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
-      path: "/",
+      path: "",
       component: () => import("@/views/discover_music/recommend_view.vue"),
     },
     {
-      path: "/recommend",
+      path: "/discover_music/recommend",
       component: () => import("@/views/discover_music/recommend_view.vue"),
     },
     {
-      path: "/rank",
+      path: "/discover_music/rank",
       component: () => import("@/views/discover_music/rank_view.vue"),
     },
     {
-      path: "/playlist",
+      path: "/discover_music/playlist",
       component: () => import("@/views/discover_music/playlist_view.vue"),
     },
     {
-      path: "/dj",
+      path: "/discover_music/dj",
       component: () => import("@/views/discover_music/dj_view.vue"),
       children: [
         {
@@ -33,12 +33,28 @@ const router = createRouter({
       ],
     },
     {
-      path: "/artist",
+      path: "/discover_music/artist",
       component: () => import("@/views/discover_music/singer_view.vue"),
+      children: [
+        {
+          path: "",
+          component: () => import("pages/singer/sub/singer_contant_cps.vue"),
+          name: "signed",
+        },
+        {
+          path: "cat",
+          component: () => import("pages/singer/sub/singer_contant_cps.vue"),
+          name: "cat",
+        },
+      ],
+    },
+    {
+      path: "/discover_music/album",
+      component: () => import("@/views/discover_music/album_view.vue"),
     },
     {
       path: "/album",
-      component: () => import("@/views/discover_music/album_view.vue"),
+      component: () => import("pages/album/sub/sing_album.vue"),
     },
   ],
 });

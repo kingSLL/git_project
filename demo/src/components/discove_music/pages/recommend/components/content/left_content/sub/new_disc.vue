@@ -14,7 +14,6 @@
               author: item?.artist?.name,
               picUrl: item?.picUrl,
             }"
-            :size="{ w: '100px', h: '100px' }"
             img_type="small_album"
           ></icon-cps>
         </template>

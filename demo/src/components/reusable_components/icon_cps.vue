@@ -3,7 +3,7 @@
   <div class="icon">
     <div class="album">
       <div
-        @click="toward(info?.id)"
+        @click="getId(info?.id)"
         class="img_div"
         :style="[{ width: effW }, { height: img_size?.h }]"
       >
@@ -43,6 +43,7 @@
 <!-- ===========script============== -->
 <script setup>
 import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 
 const props = defineProps({
   info: Object,
@@ -52,10 +53,8 @@ const props = defineProps({
     default: false,
   },
 });
-const emit = defineEmits(["toward"]);
-function toward(id) {
-  emit("toward", id);
-}
+const router = useRouter();
+
 const imgPos = reactive({});
 const paly_imgPos = reactive({});
 const effW = ref("0");
@@ -130,6 +129,10 @@ switch (props.img_type) {
     img_size.value.h = "170px";
 
     break;
+}
+
+function getId(id) {
+  router.push({ path: "/album", query: { id: id } });
 }
 </script>
 <!-- ============style============== -->

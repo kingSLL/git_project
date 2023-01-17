@@ -7,14 +7,12 @@
         <template v-for="album_new in albums_new" :key="album_new?.id">
           <icon-cps
             img_type="album"
-            :size="{ w: '130px', h: '130px' }"
             :info="{
               id: album_new?.id,
               picUrl: album_new?.picUrl,
               name: album_new?.name,
               author: album_new?.artists[0].name,
             }"
-            @toward="getId"
           ></icon-cps>
         </template>
       </div>
@@ -38,7 +36,6 @@
               name: album?.name,
               author: album?.artists[0].name,
             }"
-            @toward="getId"
           ></icon-cps>
         </template>
       </div>
@@ -56,9 +53,7 @@ import PaginationCps from "multiplexing/pagination_cps.vue";
 import { userAlbumStore } from "@/Storage";
 import { ref, watch } from "vue";
 import { objAddKey_someName } from "@/hooks";
-import { useRouter } from "vue-router";
 const albumStore = userAlbumStore();
-const router = useRouter();
 
 const albums_new = ref([]);
 const albums = ref([]);
@@ -74,13 +69,12 @@ getAlbum();
 function getIndex(index) {
   currIndex.value = index;
 }
-function getId(id) {
-  router.push({ path: "/album", query: { id: id } });
-}
 watch(currIndex, () => getAlbum());
+
 async function getAlbumNew() {
   albums_new.value = await albumStore.getAlbumNew(10);
 }
+
 async function getAlbum(area) {
   if (!area) area = keyName[currIndex.value];
   albums.value = await albumStore.getAlbum(area);

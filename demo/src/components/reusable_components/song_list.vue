@@ -50,7 +50,7 @@
 <!-- ===========script============== -->
 <script setup>
 import SubTitle from "multiplexing/sub_title.vue";
-const props = defineProps({
+defineProps({
   info: Object,
   songList: Array,
   title: String,
@@ -59,7 +59,6 @@ const props = defineProps({
     default: false,
   },
 });
-console.log(props.songList);
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>

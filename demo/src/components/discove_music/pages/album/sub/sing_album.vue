@@ -98,16 +98,16 @@ const isAuto = ref(false);
 const album = ref({});
 const songs = ref([]);
 const album_description = ref([]);
+
 const getTime = computed(() => {
-  return dayjs(album.value.publishTime).format("YYYY-MM-DD");
+  return dayjs(album.value?.publishTime).format("YYYY-MM-DD");
 });
 
 http.get(`/album?id=${route.query.id}`).then((res) => {
   album.value = res.data.album;
   songs.value = res.data.songs;
-  console.log(songs.value);
   //碟片的简介需要进行字符串切割处理
-  album_description.value = album.value.description
+  album_description.value = album.value?.description
     .split(/\n/)
     .filter((str) => str !== "");
 });

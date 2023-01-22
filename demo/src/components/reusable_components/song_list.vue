@@ -3,13 +3,13 @@
   <div class="song_list">
     <sub-title :title="title">
       <template #mid>
-        <p class="songs">{{ songList?.langth }}首歌</p>
+        <p class="songs">{{ list?.trackCount }}首歌</p>
       </template>
       <template #right>
         <p style="color: #666">
           播放:
           <span style="color: #c20b0d; font-weight: bold">{{
-            info?.playCount
+            list?.playCount
           }}</span>
           次
         </p>
@@ -22,18 +22,18 @@
         <span class="duration">时长</span>
         <span class="singer">歌手</span>
       </div>
-      <template v-for="(song, index) in songList" :key="song.id">
+      <template v-for="(song, index) in list?.tracks" :key="song.id">
         <div class="row">
           <div class="index">{{ index + 1 }}</div>
           <div class="title text_over">
             <template v-if="index + 1 < 4 && hasIcon">
-              <img :src="song?.al.picUrl" style="width: 50px; height: 50px" />
+              <img :src="song?.al?.picUrl" style="width: 50px; height: 50px" />
             </template>
             <i class="iconfont">&#xe624;</i>
 
             <span class="sing_name clickable"> {{ song?.name }}</span>
 
-            <template v-if="song?.alia.length > 0 && !song?.tns">
+            <template v-if="song?.alia?.length > 0 && !song?.tns">
               <span class="additional">-({{ song?.alia[0] }})</span>
             </template>
             <template v-else-if="song?.tns?.length > 0">
@@ -49,9 +49,10 @@
 </template>
 <!-- ===========script============== -->
 <script setup>
-import SubTitle from "multiplexing/sub_title.vue";
-defineProps({
+import SubTitle from "./sub_title.vue";
+const props = defineProps({
   info: Object,
+  list: Object,
   songList: Array,
   title: String,
   hasIcon: {
@@ -59,6 +60,7 @@ defineProps({
     default: false,
   },
 });
+console.log(props.playlist);
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>

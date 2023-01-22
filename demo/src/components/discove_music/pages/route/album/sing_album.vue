@@ -71,12 +71,9 @@
         </div>
       </div>
       <div class="singList">
-        <song-list title="歌曲列表" :song-list="songs" :hasIcon="false">
-        </song-list>
+        <song-list title="歌曲列表" :list="album" :hasIcon="false"> </song-list>
       </div>
-      <div class="comment">
-        <sub-title title="评论"></sub-title>
-      </div>
+      <div class="comment"></div>
     </div>
     <div class="right"></div>
   </div>
@@ -93,19 +90,17 @@ import { useRoute } from "vue-router";
 import * as dayjs from "dayjs";
 
 const route = useRoute();
-
 const isAuto = ref(false);
 const album = ref({});
-const songs = ref([]);
 const album_description = ref([]);
 
 const getTime = computed(() => {
   return dayjs(album.value?.publishTime).format("YYYY-MM-DD");
 });
-
 http.get(`/album?id=${route.query.id}`).then((res) => {
   album.value = res.data.album;
-  songs.value = res.data.songs;
+  album.value["tracks"] = res.data.songs;
+  console.log(album.value);
   //碟片的简介需要进行字符串切割处理
   album_description.value = album.value?.description
     .split(/\n/)

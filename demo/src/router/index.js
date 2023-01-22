@@ -54,7 +54,11 @@ const router = createRouter({
     },
     {
       path: "/album",
-      component: () => import("pages/album/sub/sing_album.vue"),
+      component: () => import("pages/route/album/sing_album.vue"),
+    },
+    {
+      path: "/playlist",
+      component: () => import("pages/route/playlist/sing_playlist.vue"),
     },
   ],
 });

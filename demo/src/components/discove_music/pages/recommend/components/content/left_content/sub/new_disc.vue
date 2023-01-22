@@ -10,6 +10,7 @@
         <template v-for="item in albums" :key="item?.id">
           <icon-cps
             :info="{
+              id: item?.id,
               name: item?.name,
               author: item?.artist?.name,
               picUrl: item?.picUrl,

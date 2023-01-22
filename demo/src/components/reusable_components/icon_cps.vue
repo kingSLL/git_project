@@ -1,7 +1,7 @@
 <!-- ==========template=============-->
 <template>
   <div class="icon">
-    <div class="album">
+    <div class="album" :style="{ width: effW }">
       <div
         @click="getId(info?.id)"
         class="img_div"
@@ -33,8 +33,12 @@
       </div>
       <template v-if="!info?.name == ''">
         <div class="details">
-          <p class="song_title clickable">{{ info?.name }}</p>
-          <p class="author clickable">{{ info?.author }}</p>
+          <p class="song_title clickable text_over">{{ info?.name }}</p>
+          <div class="nickname">
+            <slot></slot>
+            <p class="author clickable text_over">{{ info?.author }}</p>
+            <slot name="avatarDetail"></slot>
+          </div>
         </div>
       </template>
     </div>
@@ -44,7 +48,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
-
+import { split } from "lodash";
 const props = defineProps({
   info: Object,
   img_type: String,
@@ -105,14 +109,24 @@ switch (props.img_type) {
     imgPos.y = "0";
 
     break;
+  case "icon_200":
+    effW.value = "0px";
+
+    img_size.value.w = "200px";
+    img_size.value.h = "200px";
+
+    imgPos.x = "9999px";
+    imgPos.y = "9999px";
+
+    break;
   case "album":
     effW.value = "153px";
 
     imgPos.x = "0";
     imgPos.y = "-845px";
 
-    img_size.value.w = "140px";
-    img_size.value.h = "140px";
+    img_size.value.w = "130px";
+    img_size.value.h = "130px";
 
     paly_imgPos.x = "0";
     paly_imgPos.y = "-140px";
@@ -132,7 +146,12 @@ switch (props.img_type) {
 }
 
 function getId(id) {
-  router.push({ path: "/album", query: { id: id } });
+  const temp = split(props.img_type, "_");
+  if (temp.includes("album")) {
+    router.push({ path: "/album", query: { id: id } });
+  } else if (temp.includes("icon")) {
+    router.push({ path: "/playlist", query: { id: id } });
+  }
 }
 </script>
 <!-- ============style============== -->
@@ -161,16 +180,16 @@ function getId(id) {
   }
 
   .details {
-    width: 100px;
     color: #666;
     margin-top: 5px;
     overflow: hidden;
     .song_title {
-      display: inline-block;
-      white-space: nowrap;
       margin-bottom: 5px;
       font-size: 14px;
       color: #000;
+    }
+    .nickname {
+      display: flex;
     }
   }
 }

@@ -21,13 +21,21 @@
         <div class="box">
           <icon-cps
             :info="{
+              id: item?.id,
               name: item?.name,
               picUrl: item.coverImgUrl,
               author: item.creator.nickname,
             }"
             :size="{ w: '140px', h: '140px' }"
             img_type="icon_140"
-          ></icon-cps>
+          >
+            <template #avatarDetail>
+              <img
+                :src="item?.creator?.avatarDetail?.identityIconUrl"
+                style="width: 13px; height: 13px; margin-left: 5px"
+              />
+            </template>
+          </icon-cps>
         </div>
       </template>
     </div>

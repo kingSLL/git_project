@@ -60,6 +60,10 @@ const router = createRouter({
       path: "/playlist",
       component: () => import("pages/route/playlist/sing_playlist.vue"),
     },
+    {
+      path: "/song",
+      component: () => import("pages/route/song/sing_song.vue"),
+    },
   ],
 });
 

@@ -3,7 +3,7 @@
   <div class="song_list">
     <sub-title :title="title">
       <template #mid>
-        <p class="songs">{{ list?.trackCount }}首歌</p>
+        <p class="songs">{{ list?.tracks?.length }}首歌</p>
       </template>
       <template #right>
         <p style="color: #666">
@@ -25,7 +25,7 @@
       <template v-for="(song, index) in list?.tracks" :key="song.id">
         <div class="row">
           <div class="index">{{ index + 1 }}</div>
-          <div class="title text_over">
+          <div class="title text_over" @click="toSong(song.id)">
             <template v-if="index + 1 < 4 && hasIcon">
               <img :src="song?.al?.picUrl" style="width: 50px; height: 50px" />
             </template>
@@ -49,9 +49,9 @@
 </template>
 <!-- ===========script============== -->
 <script setup>
+import { useRouter } from "vue-router";
 import SubTitle from "./sub_title.vue";
-const props = defineProps({
-  info: Object,
+defineProps({
   list: Object,
   songList: Array,
   title: String,
@@ -60,7 +60,10 @@ const props = defineProps({
     default: false,
   },
 });
-console.log(props.playlist);
+const router = useRouter();
+function toSong(id) {
+  router.push({ path: "/song", query: { id: id } });
+}
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>

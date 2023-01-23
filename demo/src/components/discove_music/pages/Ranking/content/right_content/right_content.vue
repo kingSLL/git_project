@@ -3,11 +3,11 @@
   <div class="right_content">
     <div class="cnt">
       <div class="cover">
-        <img :src="info?.coverImgUrl" alt="" />
+        <img :src="list?.coverImgUrl" alt="" />
         <div class="mask"></div>
       </div>
       <div class="info">
-        <div class="rankName">{{ info?.name }}</div>
+        <div class="rankName">{{ list?.name }}</div>
         <div class="time">
           <span class="iconfont"> &#xe74f;</span>
           <span class="recent">最近更新： {{ getTime }}</span>
@@ -30,11 +30,11 @@
 
           <el-button>
             <el-icon><FolderAdd /></el-icon>
-            ({{ info?.subscribedCount }})
+            ({{ list?.subscribedCount }})
           </el-button>
           <el-button>
             <el-icon><Share /></el-icon>
-            ({{}})
+            ({{ list?.shareCount }})
           </el-button>
           <el-button>
             <el-icon><Download /></el-icon>
@@ -42,24 +42,22 @@
           </el-button>
           <el-button>
             <el-icon><ChatDotRound /></el-icon>
-            ({{}})
+            ({{ list?.commentCount }})
           </el-button>
         </div>
       </div>
     </div>
-    <song-list
-      title="歌曲列表"
-      :songList="songList"
-      :info="info"
-      :hasIcon="true"
-    ></song-list>
+    <song-list title="歌曲列表" :list="list" :hasIcon="true"></song-list>
+    <comment-cps :comment="props?.comment"></comment-cps>
   </div>
 </template>
 <!-- ===========script============== -->
 <script setup>
 import { computed } from "vue";
-import SongList from "multiplexing/song_list.vue";
 import * as dayjs from "dayjs";
+
+import SongList from "multiplexing/song_list.vue";
+import CommentCps from "multiplexing/comment_cps.vue";
 import {
   Plus,
   VideoPlay,
@@ -70,13 +68,13 @@ import {
 } from "@element-plus/icons-vue";
 // =============================
 const getTime = computed(() => {
-  return dayjs(props.info?.trackUpdateTime).format("MM月DD天");
+  return dayjs(props.list?.trackUpdateTime).format("MM月DD天");
 });
 
 const props = defineProps({
-  info: Object,
-  songList: Array,
+  list: Object,
   rankName: Object,
+  comment: Array,
 });
 </script>
 <!-- ============style============== -->

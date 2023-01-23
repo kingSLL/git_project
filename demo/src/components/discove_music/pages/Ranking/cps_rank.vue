@@ -5,8 +5,8 @@
 
     <right-content
       :rankName="namelist[rankStore.currRankIndex]"
-      :song-list="tracks"
-      :info="info"
+      :list="playlist"
+      :comment="comment?.comments"
     ></right-content>
   </div>
 </template>
@@ -15,16 +15,17 @@
 import leftContent from "./content/left_content/left_content.vue";
 import rightContent from "./content/right_content/right_content.vue";
 
+import http from "@/service";
 import { userRankStore } from "@/Storage";
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const rankStore = userRankStore();
+const route = useRoute();
 
 const namelist = ref([]);
-const tracks = ref([]);
-const info = ref({});
-const route = useRoute();
+const playlist = ref([]);
+const comment = ref({});
 
 watch(
   () => route.query.id,
@@ -39,8 +40,12 @@ async function getinfo(u_id) {
   }
   rankStore.currInfoId = u_id;
   const tempinfo = await rankStore.getRankInfo();
-  info.value = tempinfo.value.playlist;
-  tracks.value = tempinfo.value.playlist.tracks;
+  playlist.value = tempinfo.value.playlist;
+  const res = await http.get(
+    `/comment/event?threadId=${playlist.value.commentThreadId}`
+  );
+  comment.value = res.data;
+  console.log(comment.value);
 }
 
 rankStore.getRankNameList().then((res) => {

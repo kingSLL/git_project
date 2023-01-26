@@ -3,7 +3,7 @@
   <div class="cps_playlist">
     <sub-title :title="title">
       <template #mid>
-        <button @click="isClick">
+        <button @click="isClick" class="btn">
           <span>选择分类</span>
           <el-icon>
             <ArrowDown />
@@ -27,7 +27,7 @@
               author: item.creator.nickname,
             }"
             :size="{ w: '140px', h: '140px' }"
-            img_type="icon_140"
+            img_type="playlist"
           >
             <template #avatarDetail>
               <img
@@ -39,7 +39,11 @@
         </div>
       </template>
     </div>
-    <pagination-cps></pagination-cps>
+    <pagination-cps
+      :total_number="playlist_total"
+      :each_page="playlist_each"
+      @getPage="getPage"
+    ></pagination-cps>
   </div>
 </template>
 <!-- ===========script============== -->
@@ -48,43 +52,55 @@ import SubTitle from "multiplexing/sub_title.vue";
 import IconCps from "multiplexing/icon_cps.vue";
 import PaginationCps from "multiplexing/pagination_cps.vue";
 import TileSub_cps from "./title_subCps.vue";
+
 import { ref } from "vue";
 import { ArrowDown } from "@element-plus/icons-vue";
-import { filter, toArray } from "lodash";
 import http from "@/service";
+import { filter, toArray } from "lodash";
 
 const title = ref("全部");
 
-const original_list = ref([]);
 const categories = ref([]);
 const categories_list = ref([]);
 
-http.get("playlist/catlist").then((res) => {
-  const temp_categories = res.data.categories;
-  title.value = res.data.all.name;
-  original_list.value = res.data.sub;
-  categories.value = toArray(temp_categories);
-  for (let i = 0; i < Object.keys(temp_categories).length; i++) {
-    const temp_list = filter(original_list.value, (list) => {
-      return Object.keys(temp_categories)[i] == list.category;
+const playlist = ref([]);
+const playlist_total = ref(0);
+const playlist_each = ref(35);
+
+const active = ref(false);
+function isClick() {
+  active.value = !active.value;
+}
+
+http.get(`/playlist/catlist`).then((res) => {
+  let original_list = [];
+  categories.value = res.data.categories;
+  original_list = res.data.sub;
+  categories.value = toArray(categories.value);
+  for (let i = 0; i < categories.value.length; i++) {
+    const temp_list = filter(original_list, (list) => {
+      return Object.keys(categories.value)[i] == list.category;
     });
     categories_list.value.push(temp_list);
   }
 });
 
-const playlist = ref([]);
-http.get("top/playlist").then((res) => {
-  playlist.value = res.data.playlists;
-});
-const active = ref(false);
-function isClick() {
-  active.value = !active.value;
+function getPage(currPage) {
+  http
+    .get(`/top/playlist?limit=${playlist_each.value}&offset=${currPage}`)
+    .then((res) => {
+      playlist_total.value = res.data.total;
+      playlist.value = res.data.playlists;
+    });
 }
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>
 .cps_playlist {
   padding: 40px;
+  .btn {
+    margin-left: 10px;
+  }
   .grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);

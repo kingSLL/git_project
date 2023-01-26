@@ -48,7 +48,7 @@
       </div>
     </div>
     <song-list title="歌曲列表" :list="list" :hasIcon="true"></song-list>
-    <comment-cps :comment="props?.comment"></comment-cps>
+    <!-- <comment-cps type="电台" :Id="route.query.id"></comment-cps> -->
   </div>
 </template>
 <!-- ===========script============== -->
@@ -57,7 +57,7 @@ import { computed } from "vue";
 import * as dayjs from "dayjs";
 
 import SongList from "multiplexing/song_list.vue";
-import CommentCps from "multiplexing/comment_cps.vue";
+// import CommentCps from "multiplexing/comment_cps.vue";
 import {
   Plus,
   VideoPlay,

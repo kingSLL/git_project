@@ -40,7 +40,11 @@
         </template>
       </div>
     </div>
-    <pagination-cps></pagination-cps>
+    <pagination-cps
+      :total_number="album_total"
+      :each_page="album_each"
+      @getPage="getPage"
+    ></pagination-cps>
   </div>
 </template>
 <!-- ===========script============== -->
@@ -50,9 +54,11 @@ import IconCps from "multiplexing/icon_cps.vue";
 import CategoriesCps from "multiplexing/categories_cps.vue";
 import PaginationCps from "multiplexing/pagination_cps.vue";
 
+import http from "@/service";
 import { userAlbumStore } from "@/Storage";
-import { ref, watch } from "vue";
 import { objAddKey_someName } from "@/hooks";
+
+import { ref } from "vue";
 const albumStore = userAlbumStore();
 
 const albums_new = ref([]);
@@ -65,19 +71,28 @@ const values = Object.values(albumStore.areaName);
 categories_list.value = objAddKey_someName(values, "name");
 
 getAlbumNew();
-getAlbum();
 function getIndex(index) {
   currIndex.value = index;
 }
-watch(currIndex, () => getAlbum());
 
 async function getAlbumNew() {
   albums_new.value = await albumStore.getAlbumNew(10);
 }
 
-async function getAlbum(area) {
-  if (!area) area = keyName[currIndex.value];
-  albums.value = await albumStore.getAlbum(area);
+const album_total = ref(0);
+const album_each = ref(35);
+
+const area = ref("");
+
+function getPage(currPage) {
+  if (!area.value) area.value = keyName[currIndex.value];
+  http
+    .get(`album/new?limit=35&area=${area.value}&offset=${currPage}`)
+    .then((res) => {
+      // album_each.value = res.data.albums.length;
+      album_total.value = res.data.total;
+      albums.value = res.data.albums;
+    });
 }
 </script>
 <!-- ============style============== -->

@@ -26,32 +26,21 @@
               <p class="company">发行公司：{{ album?.company }}</p>
             </div>
             <div class="btn_group">
-              <div class="play_btn">
-                <a class="btn_icon play">
-                  <p>播放</p>
-                </a>
-                <a class="btn_icon additional"> </a>
-              </div>
-              <div class="collection_btn">
-                <a class="btn_icon">
-                  <p>收藏</p>
-                </a>
-              </div>
-              <div class="share_btn">
-                <a class="btn_icon">
-                  <p>（{{ album?.info?.commentCount }}）</p>
-                </a>
-              </div>
-              <div class="download_btn">
-                <a class="btn_icon">
-                  <p>下载</p>
-                </a>
-              </div>
-              <div class="comment_btn">
-                <a class="btn_icon">
-                  <p>（{{ album?.info?.shareCount }}）</p>
-                </a>
-              </div>
+              <paly-btn></paly-btn>
+              <simple-btn type="收藏"></simple-btn>
+              <simple-btn
+                type="分享"
+                :info="{
+                  shareCount: album?.info?.shareCount,
+                }"
+              ></simple-btn>
+              <simple-btn type="下载"></simple-btn>
+              <simple-btn
+                type="评论"
+                :info="{
+                  commentCount: album?.info?.commentCount,
+                }"
+              ></simple-btn>
             </div>
           </div>
         </div>
@@ -73,15 +62,23 @@
       <div class="singList">
         <song-list title="歌曲列表" :list="album" :hasIcon="false"> </song-list>
       </div>
-      <div class="comment"></div>
+      <div class="comment">
+        <comment-cps type="专辑" :Id="route.query.id"> </comment-cps>
+      </div>
     </div>
-    <div class="right"></div>
+    <div class="right">
+      <single-supplement></single-supplement>
+    </div>
   </div>
 </template>
 <!-- ===========script============== -->
 <script setup>
 import IconCps from "multiplexing/icon_cps.vue";
 import SongList from "multiplexing/song_list.vue";
+import CommentCps from "multiplexing/comment_cps.vue";
+import PalyBtn from "multiplexing/btn/play_btn.vue";
+import SimpleBtn from "multiplexing/btn/simple_btn.vue";
+import SingleSupplement from "multiplexing/single_supplement.vue";
 
 import http from "@/service";
 
@@ -100,7 +97,6 @@ const getTime = computed(() => {
 http.get(`/album?id=${route.query.id}`).then((res) => {
   album.value = res.data.album;
   album.value["tracks"] = res.data.songs;
-  console.log(album.value);
   //碟片的简介需要进行字符串切割处理
   album_description.value = album.value?.description
     .split(/\n/)
@@ -151,36 +147,6 @@ function changeTextHeight() {
             display: flex;
             column-gap: 4px;
             margin: 20px 0 25px 0;
-            .play_btn {
-              display: flex;
-              align-items: center;
-              .play {
-                width: 60px;
-
-                background-position: 0 -634px;
-                padding-right: 12px;
-                p {
-                  color: #f5f5f5;
-                  padding-left: 35px;
-                }
-              }
-              .additional {
-                width: 32px;
-                background-position: 0 -1588px;
-                p {
-                }
-              }
-            }
-            .collection_btn {
-              a {
-                border: 1px solid #c4c4c4;
-                padding-right: 5px;
-                background-position: -1px -978px;
-                p {
-                  padding-left: 25px;
-                }
-              }
-            }
             .share_btn {
               a {
                 border: 1px solid #c4c4c4;
@@ -207,14 +173,6 @@ function changeTextHeight() {
                 p {
                   padding-left: 20px;
                 }
-              }
-            }
-            a {
-              display: inline-block;
-              height: 28px;
-              border-radius: 3px;
-              p {
-                line-height: 28px;
               }
             }
           }
@@ -254,7 +212,6 @@ function changeTextHeight() {
     box-sizing: border-box;
     width: 270px;
     padding: 20px 40px 40px 30px;
-    background-color: lightblue;
     border-left: 1px solid #ccc;
   }
 }

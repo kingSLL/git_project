@@ -4,7 +4,7 @@
     <div class="top">
       <sub-title title="评论">
         <template #mid>
-          <p class="comment_total">共{{ props.commentSong?.total }}条评论</p>
+          <p class="comment_total">共{{ commentSong.totalCount }}条评论</p>
         </template>
       </sub-title>
       <div class="comment_input">
@@ -30,79 +30,104 @@
         </div>
       </div>
     </div>
+    <template v-if="hotComments.length">
+      <sing-comment
+        title="精彩评论"
+        :commentBox="hotCommentSong"
+        :comments="hotComments"
+      ></sing-comment>
+    </template>
 
-    <div class="hot_comment">
-      <h4>精彩评论</h4>
+    <sing-comment
+      title="最新评论"
+      :commentBox="commentSong"
+      :comments="comments"
+    ></sing-comment>
 
-      <template
-        v-for="item in props.commentSong?.hotComments"
-        :key="item.commentId"
-      >
-        <div class="comment">
-          <div class="icon">
-            <img :src="item?.user.avatarUrl" alt="" />
-          </div>
-          <div class="contant">
-            <div class="text">
-              <p class="username clickable">{{ item?.user.nickname }}</p>
-              ：
-              <p class="details">{{ item?.content }}</p>
-            </div>
-            <div class="bottom">
-              <p class="time">{{ getTime(item?.time) }}</p>
-              <div class="response"></div>
-            </div>
-          </div>
-        </div>
-      </template>
-    </div>
-    <div class="hot_comment">
-      <h4>最近评论（{{ props.commentSong?.total }}）</h4>
-
-      <template
-        v-for="item in props.commentSong?.comments"
-        :key="item.commentId"
-      >
-        <div class="comment">
-          <div class="icon">
-            <img :src="item?.user.avatarUrl" alt="" />
-          </div>
-          <div class="contant">
-            <div class="text">
-              <p class="username clickable">{{ item?.user.nickname }}</p>
-              ：
-              <p class="details">{{ item?.content }}</p>
-            </div>
-            <div class="bottom">
-              <p class="time">{{ getTime(item?.time) }}</p>
-              <div class="response"></div>
-            </div>
-          </div>
-        </div>
-      </template>
-    </div>
-    <pagination-cps></pagination-cps>
+    <pagination-cps
+      :total_number="comment_total"
+      :each_page="comment_each"
+      @getPage="getPage"
+    ></pagination-cps>
   </div>
 </template>
 <!-- ===========script============== -->
 <script setup>
 import SubTitle from "multiplexing/sub_title.vue";
 import PaginationCps from "multiplexing/pagination_cps.vue";
+import SingComment from "multiplexing/sing_comment.vue";
 
-import dayjs from "dayjs";
+import http from "@/service";
+import { ref } from "vue";
 const props = defineProps({
-  comment: Array,
-  commentSong: Object,
+  Id: String,
+  type: String,
 });
 
-function getTime(time) {
-  return dayjs(time).format("M月DD日 HH:mm");
+//评论
+const commentSong = ref({});
+const comments = ref([]);
+const hotCommentSong = ref([]);
+const hotComments = ref([]);
+
+const typelist = ref({
+  0: "歌曲",
+
+  1: "mv",
+
+  2: "歌单",
+
+  3: "专辑",
+
+  4: "电台节目",
+
+  5: "视频",
+
+  6: "动态",
+
+  7: "电台",
+});
+const type = Object.values(typelist.value).findIndex(
+  (item) => item === props.type
+);
+
+const comment_total = ref(0);
+const comment_each = ref(0);
+
+http.get(`/comment/hot?type=${type}&id=${props.Id}`).then((res) => {
+  hotCommentSong.value = res.data;
+  hotComments.value = res.data.hotComments;
+  getCommentText(hotComments.value);
+});
+let lastTime = 0;
+function getPage(currPage) {
+  let curr = (currPage + 20) / 20;
+  http
+    .get(
+      `/comment/new?type=${type}&id=${props.Id}&sortType=3&pageNo=${curr}&cursor=${lastTime}`
+    )
+    .then((res) => {
+      if (comment_total.value === 0)
+        comment_total.value = res.data.data.totalCount;
+
+      if (comment_each.value !== 20)
+        comment_each.value = res.data.data.comments.length;
+
+      lastTime = res.data.data.comments[comment_each.value - 1].time;
+
+      commentSong.value = res.data.data;
+      comments.value = res.data.data.comments;
+      getCommentText(comments?.value);
+    });
 }
-// http
-//   .get(`/comment/floor?parentCommentId=5839990523&id=${route.query.id}&type=0`)
-//   .then((res) => {
-//     console.log(res.data);
-//   });
+function getCommentText(comments) {
+  comments.forEach((element) => {
+    element.contents = getText(element.content);
+  });
+}
+function getText(text) {
+  return text.split(/\n/).filter((str) => str !== "");
+}
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>
@@ -175,48 +200,6 @@ function getTime(time) {
                 color: #fff;
               }
             }
-          }
-        }
-      }
-    }
-  }
-  .hot_comment {
-    margin-top: 30px;
-    h4 {
-      height: 20px;
-      border-bottom: 1px solid #cfcfcf;
-    }
-    .comment {
-      display: flex;
-      column-gap: 10px;
-      padding: 15px 0;
-      border-bottom: 1px dotted #cdcdcd;
-      .icon {
-        img {
-          width: 50px;
-          height: 50px;
-        }
-      }
-      .contant {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        .text {
-          line-height: 18px;
-          .username {
-            display: inline;
-            color: #0c73c2;
-          }
-          .details {
-            display: inline;
-            text-indent: 2em;
-          }
-        }
-        .bottom {
-          display: flex;
-          .time {
-            flex: 1;
-            color: #999;
           }
         }
       }

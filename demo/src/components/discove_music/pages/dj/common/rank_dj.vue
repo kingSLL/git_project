@@ -87,8 +87,6 @@ const rankPosX = computed(() => {
 });
 
 const rankPosY = computed(() => {
-  console.log(last.value);
-
   if (last.value < 0) {
     return "-283px";
   } else if (nub.value === 0) {

@@ -64,6 +64,28 @@ const router = createRouter({
       path: "/song",
       component: () => import("pages/route/song/sing_song.vue"),
     },
+    {
+      path: "/artist",
+      component: () => import("pages/route/artist/sing_artist.vue"),
+      children: [
+        {
+          path: "",
+          component: () => import("pages/route/artist/sub/hot_work.vue"),
+        },
+        {
+          path: "album",
+          component: () => import("pages/route/artist/sub/album_all.vue"),
+        },
+        {
+          path: "mv",
+          component: () => import("pages/route/artist/sub/mv_related.vue"),
+        },
+        {
+          path: "desc",
+          component: () => import("pages/route/artist/sub/artist_desc.vue"),
+        },
+      ],
+    },
   ],
 });
 

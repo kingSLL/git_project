@@ -33,10 +33,17 @@
       </div>
       <template v-if="!info?.name == ''">
         <div class="details">
-          <p class="song_title clickable text_over">{{ info?.name }}</p>
+          <p class="song_title clickable text_over" @click="getId(info?.id)">
+            {{ info?.name }}
+          </p>
           <div class="nickname">
             <slot></slot>
-            <p class="author clickable text_over">{{ info?.author }}</p>
+            <p
+              class="author clickable text_over"
+              @click="getId(info?.artistId, 'author')"
+            >
+              {{ info?.author }}
+            </p>
             <slot name="avatarDetail"></slot>
           </div>
         </div>
@@ -79,6 +86,20 @@ switch (props.img_type) {
 
     paly_size.value = "22px";
     break;
+  case "normal_album":
+    effW.value = "145px";
+
+    imgPos.x = "-170px";
+    imgPos.y = "-850px";
+
+    img_size.value.w = "120px";
+    img_size.value.h = "120px";
+
+    paly_imgPos.x = "0";
+    paly_imgPos.y = "-140px";
+
+    paly_size.value = "28px";
+    break;
   case "icon_80":
     effW.value = "80px";
 
@@ -89,7 +110,7 @@ switch (props.img_type) {
     imgPos.y = "-57px";
 
     break;
-  case "icon_130":
+  case "artist":
     effW.value = "130px";
 
     img_size.value.w = "130px";
@@ -99,7 +120,7 @@ switch (props.img_type) {
     imgPos.y = "-680px";
 
     break;
-  case "icon_140":
+  case "playlist":
     effW.value = "140px";
 
     img_size.value.w = "140px";
@@ -110,7 +131,7 @@ switch (props.img_type) {
 
     break;
   case "icon_200":
-    effW.value = "0px";
+    effW.value = "208px";
 
     img_size.value.w = "200px";
     img_size.value.h = "200px";
@@ -145,12 +166,22 @@ switch (props.img_type) {
     break;
 }
 
-function getId(id) {
+function getId(id, type = "") {
   const temp = split(props.img_type, "_");
   if (temp.includes("album")) {
-    router.push({ path: "/album", query: { id: id } });
-  } else if (temp.includes("icon")) {
-    router.push({ path: "/playlist", query: { id: id } });
+    if (type) {
+      router.push({ path: "/artist", query: { id: id } });
+    } else {
+      router.push({ path: "/album", query: { id: id } });
+    }
+  } else if (temp.includes("playlist")) {
+    if (type) {
+      router.push({ path: "/home", query: { id: id } });
+    } else {
+      router.push({ path: "/playlist", query: { id: id } });
+    }
+  } else if (temp.includes("artist")) {
+    router.push({ path: "/artist", query: { id: id } });
   }
 }
 </script>

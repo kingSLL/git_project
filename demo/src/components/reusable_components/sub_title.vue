@@ -1,19 +1,27 @@
 <!-- ==========template=============-->
 <template>
-  <div class="subtitle">
-    <div class="content">
-      <div class="logo" v-if="hasLogo"></div>
+  <template v-if="bigTitle">
+    <div class="subtitle">
+      <div class="content">
+        <div class="logo" v-if="hasLogo"></div>
 
-      <h2>{{ title }}</h2>
-      <div class="categories">
-        <slot name="mid"> </slot>
+        <h2>{{ title }}</h2>
+        <div class="categories">
+          <slot name="mid"> </slot>
+        </div>
+        <div class="more">
+          <slot name="right"> </slot>
+          <p v-if="hasMore">更多 <i class="iconfont"> &#xe62d;</i></p>
+        </div>
       </div>
-      <div class="more">
-        <slot name="right"> </slot>
-        <p v-if="hasMore">更多 <i class="iconfont"> &#xe62d;</i></p>
-      </div>
-    </div>
-  </div>
+    </div></template
+  >
+  <template v-else>
+    <h4>
+      {{ title }}
+      <template v-if="totalCount"> （{{ totalCount }}） </template>
+    </h4>
+  </template>
 </template>
 <!-- ===========script============== -->
 <script setup>
@@ -27,6 +35,11 @@ defineProps({
     type: Boolean,
     default: () => false,
   },
+  bigTitle: {
+    type: Boolean,
+    default: () => true,
+  },
+  totalCount: Number,
 });
 </script>
 <!-- ============style============== -->
@@ -57,5 +70,10 @@ defineProps({
     .more {
     }
   }
+}
+h4 {
+  height: 20px;
+  border-bottom: 1px solid #cfcfcf;
+  margin-bottom: 20px;
 }
 </style>

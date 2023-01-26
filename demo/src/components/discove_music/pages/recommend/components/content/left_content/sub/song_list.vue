@@ -4,16 +4,16 @@
     <sub-title :title="title" :hasLogo="true"></sub-title>
 
     <div class="container">
-      <template v-for="item in listName" :key="item.id">
+      <template v-for="item in list" :key="item.id">
         <div class="text">
           <div class="top">
-            <div class="icon">
+            <div class="icon" @click="topath('rank', item.id)">
               <img :src="item.coverImgUrl" />
               <div class="eff mask"></div>
             </div>
             <div class="right">
               <h4>
-                <a class="clickable">
+                <a class="clickable" @click="topath('rank', item.id)">
                   {{ item.name }}
                 </a>
               </h4>
@@ -24,23 +24,24 @@
           <div class="bottom">
             <div class="list">
               <ol>
-                <template
-                  v-for="(song, index) in songlist[item.name]"
-                  :key="index"
-                >
+                <template v-for="(song, index) in item?.songs" :key="index">
                   <li>
                     <span class="index">{{ index + 1 }}</span>
                     <span class="name text_over">
-                      <a class="clickable">
+                      <a class="clickable" @click="topath('/song', song.id)">
                         {{ song.name }}
                       </a>
                     </span>
+
+                    <div class="btn">
+                      <a href=""></a>
+                    </div>
                   </li>
                 </template>
               </ol>
             </div>
             <div class="more clickable">
-              <a>查看全部></a>
+              <a @click="topath('rank', item.id)">查看全部></a>
             </div>
           </div>
         </div>
@@ -50,54 +51,37 @@
 </template>
 <!-- ===========script============== -->
 <script setup>
-import { ref } from "vue";
-import { filter, cloneDeep } from "lodash";
 import SubTitle from "multiplexing/sub_title.vue";
-import http from "@/service";
-import { userRankStore } from "@/Storage";
-const listName = ref([]);
 
-const songlist = ref({});
+import http from "@/service";
+
+import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 const title = "榜单";
 const totalSong = 10;
-const rankStore = userRankStore();
-getHttp();
 
-async function getHttp() {
-  const songs = [];
-  let upList_song = [];
-  let newList_song = [];
-  let createList_song = [];
+const list = ref([]);
 
-  const toplist = await rankStore.getRankNameList();
-  const tempList = filter(toplist, (list) => {
-    return ["飙升榜", "新歌榜", "原创榜"].includes(list.name);
-  });
-  listName.value = tempList;
-  // =============================
-
-  const uplist = await http.get(
-    `/playlist/track/all?id=${tempList[0].id}&limit=${totalSong}`
-  );
-  upList_song = cloneDeep(uplist.data.songs);
-  songs.push(upList_song);
-  // =============================
-  const newlist = await http.get(
-    `/playlist/track/all?id=${tempList[1].id}&limit=${totalSong}`
-  );
-  newList_song = cloneDeep(newlist.data.songs);
-  songs.push(newList_song);
-  // =============================
-  const createlist = await http.get(
-    `/playlist/track/all?id=${tempList[2].id}&limit=${totalSong}`
-  );
-  createList_song = cloneDeep(createlist.data.songs);
-  songs.push(createList_song);
-  // ==将网络数据转化为自己想要的格式
-  for (let i = 0; i < listName.value.length; i++) {
-    songlist.value[listName.value[i].name] = songs[i];
+http.get("/toplist").then((res) => {
+  for (let i = 0; i < 3; i++) {
+    list.value.push(res.data.list[i]);
   }
+  list.value.forEach((element) => {
+    http
+      .get(`/playlist/track/all?id=${element.id}&limit=${totalSong}`)
+      .then((res) => {
+        element.songs = res.data.songs;
+      });
+  });
+});
+
+const router = useRouter();
+function topath(path, id) {
+  router.push({
+    path: path,
+    query: { id: id },
+  });
 }
 </script>
 <!-- ============style============== -->
@@ -162,12 +146,12 @@ async function getHttp() {
               .name {
                 width: 170px;
               }
-            }
-            li:nth-child(2n + 1) {
-              background-color: #e8e8e8;
-            }
-            li:nth-child(n + 1):nth-child(-n + 3) .index {
-              color: red;
+              &:nth-child(2n + 1) {
+                background-color: #e8e8e8;
+              }
+              &:nth-child(n + 1):nth-child(-n + 3) .index {
+                color: red;
+              }
             }
           }
         }

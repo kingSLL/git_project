@@ -19,9 +19,9 @@
         <div class="singer">
           <template v-if="index < 10">
             <icon-cps
-              img_type="icon_130"
-              :size="{ w: '130px', h: '130px' }"
+              img_type="artist"
               :info="{
+                id: singer?.id,
                 picUrl: singer?.img1v1Url,
               }"
             ></icon-cps>

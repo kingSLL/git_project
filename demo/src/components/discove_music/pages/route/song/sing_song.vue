@@ -73,15 +73,18 @@
           </div>
         </div>
       </div>
-      <comment-cps :commentSong="commentSong"></comment-cps>
+      <comment-cps type="歌曲" :Id="route.query.id"></comment-cps>
     </div>
-    <div class="right"></div>
+    <div class="right">
+      <single-supplement></single-supplement>
+    </div>
   </div>
 </template>
 <!-- ===========script============== -->
 <script setup>
 import IconCps from "multiplexing/icon_cps.vue";
 import CommentCps from "multiplexing/comment_cps.vue";
+import SingleSupplement from "multiplexing/single_supplement.vue";
 
 import http from "@/service";
 import { parseSongStr } from "@/hooks";
@@ -97,8 +100,6 @@ const privileges = ref({});
 const lyrics = ref([]);
 //评论
 const commentSong = ref({});
-const comments = ref([]);
-const hotComments = ref([]);
 
 //点击事件所需参数
 
@@ -107,22 +108,10 @@ const isAuto = ref(false);
 http.get(`/song/detail?ids=${route.query.id}`).then((res) => {
   song.value = res.data.songs;
   privileges.value = res.data.privileges;
-  console.log(res.data);
 });
 http.get(`/lyric?id=${route.query.id}`).then((res) => {
   lyrics.value = parseSongStr(res.data.lrc.lyric);
 });
-http.get(`/comment/music?id=${route.query.id}`).then((res) => {
-  commentSong.value = res.data;
-  comments.value = res.data.comments;
-  hotComments.value = res.data.hotComments;
-  console.log(commentSong.value);
-});
-http
-  .get(`/comment/floor?parentCommentId=5839990523&id=${route.query.id}&type=0`)
-  .then((res) => {
-    console.log(res.data);
-  });
 
 function changeTextHeight() {
   isAuto.value = !isAuto.value;
@@ -328,7 +317,6 @@ function changeTextHeight() {
     box-sizing: border-box;
     width: 270px;
     padding: 20px 40px 40px 30px;
-    background-color: lightblue;
     border-left: 1px solid #ccc;
   }
 }

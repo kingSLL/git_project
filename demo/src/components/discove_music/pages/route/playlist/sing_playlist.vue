@@ -30,32 +30,26 @@
               <p class="time">{{ getTime }} 创建</p>
             </div>
             <div class="btn_group">
-              <div class="play_btn">
-                <a class="btn_icon play">
-                  <p>播放</p>
-                </a>
-                <a class="btn_icon additional"> </a>
-              </div>
-              <div class="collection_btn">
-                <a class="btn_icon">
-                  <p>（{{ playlist?.subscribedCount }}）</p>
-                </a>
-              </div>
-              <div class="share_btn">
-                <a class="btn_icon">
-                  <p>（{{ playlist?.shareCount }}）</p>
-                </a>
-              </div>
-              <div class="download_btn">
-                <a class="btn_icon">
-                  <p>下载</p>
-                </a>
-              </div>
-              <div class="comment_btn">
-                <a class="btn_icon">
-                  <p>（{{ playlist?.commentCount }}）</p>
-                </a>
-              </div>
+              <play-btn></play-btn>
+              <simple-btn
+                type="收藏"
+                :info="{
+                  subscribedCount: playlist?.subscribedCount,
+                }"
+              ></simple-btn>
+              <simple-btn
+                type="分享"
+                :info="{
+                  shareCount: playlist?.shareCount,
+                }"
+              ></simple-btn>
+              <simple-btn type="下载"></simple-btn>
+              <simple-btn
+                type="评论"
+                :info="{
+                  commentCount: playlist?.commentCount,
+                }"
+              ></simple-btn>
             </div>
             <div class="categories">
               <b>标签：</b>
@@ -84,15 +78,23 @@
         <song-list title="歌曲列表" :list="playlist" :hasIcon="false">
         </song-list>
       </div>
-      <div class="comment"></div>
+      <div class="comment">
+        <comment-cps type="歌单" :Id="route.query.id"></comment-cps>
+      </div>
     </div>
-    <div class="right"></div>
+    <div class="right">
+      <single-supplement></single-supplement>
+    </div>
   </div>
 </template>
 <!-- ===========script============== -->
 <script setup>
 import IconCps from "multiplexing/icon_cps.vue";
 import SongList from "multiplexing/song_list.vue";
+import CommentCps from "multiplexing/comment_cps.vue";
+import SingleSupplement from "multiplexing/single_supplement.vue";
+import PlayBtn from "multiplexing/btn/play_btn.vue";
+import SimpleBtn from "multiplexing/btn/simple_btn.vue";
 
 import http from "@/service";
 
@@ -124,7 +126,7 @@ http.get(`/playlist/detail?id=${route.query.id}`).then((res) => {
 .sing_playlist {
   display: flex;
   .left {
-    padding: 40px;
+    padding: 40px 30px;
     flex: 1;
     .albumItroduce {
       .baseInfo {
@@ -171,72 +173,6 @@ http.get(`/playlist/detail?id=${route.query.id}`).then((res) => {
             display: flex;
             column-gap: 4px;
             margin: 20px 0 25px 0;
-            .play_btn {
-              display: flex;
-              align-items: center;
-              .play {
-                width: 60px;
-
-                background-position: 0 -634px;
-                padding-right: 12px;
-                p {
-                  color: #f5f5f5;
-                  padding-left: 35px;
-                }
-              }
-              .additional {
-                width: 32px;
-                background-position: 0 -1588px;
-                p {
-                }
-              }
-            }
-            .collection_btn {
-              a {
-                border: 1px solid #c4c4c4;
-                padding-right: 5px;
-                background-position: -1px -978px;
-                p {
-                  padding-left: 25px;
-                }
-              }
-            }
-            .share_btn {
-              a {
-                border: 1px solid #c4c4c4;
-                background-position: -1px -1226px;
-                p {
-                  padding-left: 20px;
-                }
-              }
-            }
-            .download_btn {
-              a {
-                border: 1px solid #c4c4c4;
-                padding-right: 5px;
-                background-position: -1px -2762px;
-                p {
-                  padding-left: 25px;
-                }
-              }
-            }
-            .comment_btn {
-              a {
-                border: 1px solid #c4c4c4;
-                background-position: -1px -1466px;
-                p {
-                  padding-left: 20px;
-                }
-              }
-            }
-            a {
-              display: inline-block;
-              height: 28px;
-              border-radius: 3px;
-              p {
-                line-height: 28px;
-              }
-            }
           }
           .categories {
             a {
@@ -285,7 +221,6 @@ http.get(`/playlist/detail?id=${route.query.id}`).then((res) => {
     box-sizing: border-box;
     width: 270px;
     padding: 20px 40px 40px 30px;
-    background-color: lightblue;
     border-left: 1px solid #ccc;
   }
 }

@@ -13,7 +13,6 @@
 <!-- ===========script============== -->
 <script setup>
 import TempSinger from "../common/temp_singer_cps.vue";
-// import IconSinger from "../common/icon_singer.vue";
 import http from "@/service";
 import { ref, computed, onBeforeMount } from "vue";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";

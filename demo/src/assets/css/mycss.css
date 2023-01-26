@@ -14,6 +14,10 @@
   background: url(https://s2.music.126.net/style/web2/img/button2.png?dc8dfae0f130e77305ba970da283cbde)
     no-repeat 0 9999px;
 }
+.download_icon {
+  background: url(https://s2.music.126.net/style/web2/img/sprite.png?acdf4c948ef597331c8535216bb8f854)
+    no-repeat 0 9999px;
+}
 .text_content {
   max-width: 980px;
   margin: 0 auto;

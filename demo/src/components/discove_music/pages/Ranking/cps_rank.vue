@@ -1,13 +1,9 @@
 <!-- ==========template=============-->
 <template>
   <div class="cps_rank">
-    <left-content :name-list="namelist"></left-content>
+    <left-content :name-list="listName"></left-content>
 
-    <right-content
-      :rankName="namelist[rankStore.currRankIndex]"
-      :list="playlist"
-      :comment="comment?.comments"
-    ></right-content>
+    <right-content :rankName="listName" :list="playlist"></right-content>
   </div>
 </template>
 <!-- ===========script============== -->
@@ -16,42 +12,34 @@ import leftContent from "./content/left_content/left_content.vue";
 import rightContent from "./content/right_content/right_content.vue";
 
 import http from "@/service";
-import { userRankStore } from "@/Storage";
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
-const rankStore = userRankStore();
 const route = useRoute();
 
-const namelist = ref([]);
-const playlist = ref([]);
-const comment = ref({});
+const playlist = ref({});
+const listName = ref([]);
 
 watch(
   () => route.query.id,
   (curr) => {
-    getinfo(curr);
+    http.get(`/playlist/detail?id=${curr}`).then((res) => {
+      playlist.value = res.data.playlist;
+    });
   }
 );
-
-async function getinfo(u_id) {
-  if (!u_id) {
-    u_id = namelist.value[rankStore.currRankIndex].id;
-  }
-  rankStore.currInfoId = u_id;
-  const tempinfo = await rankStore.getRankInfo();
-  playlist.value = tempinfo.value.playlist;
-  const res = await http.get(
-    `/comment/event?threadId=${playlist.value.commentThreadId}`
-  );
-  comment.value = res.data;
-  console.log(comment.value);
+if (route.query?.id) {
+  http.get(`/playlist/detail?id=${route.query?.id}`).then((res) => {
+    playlist.value = res.data.playlist;
+  });
+} else {
+  http.get(`/playlist/detail?id=19723756`).then((res) => {
+    playlist.value = res.data.playlist;
+    console.log(playlist.value);
+  });
 }
-
-rankStore.getRankNameList().then((res) => {
-  namelist.value = res;
-  rankStore.currInfoId = namelist.value[rankStore.currRankIndex].id;
-  getinfo(rankStore.currInfoId);
+http.get("/toplist").then((res) => {
+  listName.value = res.data.list;
 });
 </script>
 <!-- ============style============== -->

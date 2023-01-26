@@ -3,12 +3,12 @@
   <div class="left_content">
     <div class="container">
       <div class="text">
-        <template v-for="(item, index) in nameList" :key="item.id">
+        <template v-for="item in nameList" :key="item.id">
           <div class="box">
             <div
               class="info"
-              :class="{ active: rankStore.currRankIndex == index }"
-              @click="changedIndex(index)"
+              :class="{ active: route.query?.id == item.id }"
+              @click="changedIndex(item.id)"
             >
               <div class="left">
                 <img :src="item.coverImgUrl" class="icon" />
@@ -26,23 +26,22 @@
 </template>
 <!-- ===========script============== -->
 <script setup>
-import { userRankStore } from "@/Storage";
-import { useRouter } from "vue-router";
-const props = defineProps({
+import { useRouter, useRoute } from "vue-router";
+defineProps({
   nameList: Object,
 });
 
 const router = useRouter();
+const route = useRoute();
 
-const rankStore = userRankStore();
-
-function changedIndex(index) {
-  rankStore.currRankIndex = index;
-
+function changedIndex(id) {
   router.push({
-    path: "/discover_music/rank",
-    query: { id: props.nameList[rankStore.currRankIndex].id },
+    path: "rank",
+    query: { id: id },
   });
+}
+if (!route.query.id) {
+  route.query.id = 19723756;
 }
 </script>
 <!-- ============style============== -->

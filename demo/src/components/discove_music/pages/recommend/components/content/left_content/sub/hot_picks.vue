@@ -6,17 +6,17 @@
         <categories-cps :list="list"></categories-cps>
       </template>
     </sub-title>
-    <div class="container">
-      <template v-for="item in 8" :key="item">
-        <div class="grid">
-          <img src="" alt="" />
-          <div>
-            <span></span>
-            <p class="clickable">
-              「四季电台·冬」Chapter.18:你在冬天如何克服自己的起床困难症的？
-            </p>
-          </div>
-        </div>
+    <div class="container" v-if="dataItem">
+      <template v-for="item in dataItem" :key="item">
+        <icon-cps
+          :info="{
+            artistId: item?.artist?.id,
+            id: item?.id,
+            name: item.title,
+            picUrl: item.img_url,
+          }"
+          img_type="artist"
+        ></icon-cps>
       </template>
     </div>
   </div>
@@ -26,6 +26,8 @@
 import { ref } from "vue";
 import SubTitle from "multiplexing/sub_title.vue";
 import CategoriesCps from "multiplexing/categories_cps.vue";
+import IconCps from "multiplexing/icon_cps.vue";
+import http from "@/service";
 const list = ref([
   { name: "华语" },
   { name: "流行" },
@@ -34,6 +36,11 @@ const list = ref([
   { name: "电子" },
 ]);
 const title = "热门歌曲";
+const dataItem = ref();
+const random = Math.random();
+http.get(`/hot/discover?a=${random}`).then((res) => {
+  dataItem.value = res.data;
+});
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>
@@ -63,18 +70,16 @@ const title = "热门歌曲";
 
   .container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr 1fr;
     justify-content: space-between;
     column-gap: 42px;
     margin-bottom: 30px;
     .grid {
-      background-color: aquamarine;
       padding-bottom: 30px;
       img {
-        width: 100%;
+        width: 140px;
         height: 140px;
-        background-color: skyblue;
       }
 
       p {

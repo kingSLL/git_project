@@ -18,7 +18,16 @@
           <input type="text" placeholder="音乐/视频/电台/用户" />
         </div>
         <a class="author clickableWithoutLine">创作者中心</a>
-        <a class="login clickable">登录</a>
+        <template v-if="!accountStore.account.uId">
+          <a class="login clickable" @click="change">登录</a>
+        </template>
+        <template v-else>
+          <img
+            :src="accountStore.account?.avatarUrl"
+            style="width: 30px; height: 30px; border-radius: 30px"
+            @click="ToPath"
+          />
+        </template>
       </div>
     </div>
   </div>
@@ -26,9 +35,19 @@
 <!-- ===========script============== -->
 <script setup>
 import { ref } from "vue";
-
+import { userlognStore, userAccountStore } from "@/Storage";
+import { useRouter } from "vue-router";
 const list = ["发现音乐", "我的音乐", "关注", "商城", "音乐人", "下载客户端"];
 const currindex = ref(0);
+const lognStore = userlognStore();
+const accountStore = userAccountStore();
+const router = useRouter();
+function change() {
+  lognStore.isLogn = true;
+}
+function ToPath() {
+  router.push("/user/home");
+}
 </script>
 <!-- ============style============== -->
 <style lang="less" scoped>

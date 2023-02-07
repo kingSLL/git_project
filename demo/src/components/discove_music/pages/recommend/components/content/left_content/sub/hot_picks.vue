@@ -8,15 +8,10 @@
     </sub-title>
     <div class="container" v-if="dataItem">
       <template v-for="item in dataItem" :key="item">
-        <icon-cps
-          :info="{
-            artistId: item?.artist?.id,
-            id: item?.id,
-            name: item.title,
-            picUrl: item.img_url,
-          }"
-          img_type="artist"
-        ></icon-cps>
+        <div>
+          <img :src="item.img_url" />
+          <p>{{ item.title }}</p>
+        </div>
       </template>
     </div>
   </div>
@@ -26,7 +21,6 @@
 import { ref } from "vue";
 import SubTitle from "multiplexing/sub_title.vue";
 import CategoriesCps from "multiplexing/categories_cps.vue";
-import IconCps from "multiplexing/icon_cps.vue";
 import http from "@/service";
 const list = ref([
   { name: "华语" },
@@ -72,21 +66,18 @@ http.get(`/hot/discover?a=${random}`).then((res) => {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr 1fr;
-    justify-content: space-between;
     column-gap: 42px;
     margin-bottom: 30px;
-    .grid {
-      padding-bottom: 30px;
-      img {
-        width: 140px;
-        height: 140px;
-      }
 
-      p {
-        font-size: 14px;
-        text-indent: 2em;
-        height: 40px;
-      }
+    img {
+      width: 140px;
+      height: 140px;
+    }
+
+    p {
+      font-size: 14px;
+      text-indent: 2em;
+      height: 40px;
     }
   }
 }

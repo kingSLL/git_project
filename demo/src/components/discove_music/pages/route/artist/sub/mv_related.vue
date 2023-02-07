@@ -1,10 +1,26 @@
 <!-- ==========template=============-->
 <template>
   <div class="mv_related">
-    <h1>mv_related</h1>
+    <hr />
+    <audio
+      src="https://music.163.com/song/media/outer/url?id=1873321491.mp3"
+      ref="audioRef"
+    ></audio>
+    <hr />
   </div>
 </template>
 <!-- ===========script============== -->
-<script setup></script>
+<script setup>
+import { ref, onMounted } from "vue";
+
+const audioRef = ref();
+onMounted(() => {
+  // audioRef.value.play();
+});
+</script>
 <!-- ============style============== -->
-<style scoped></style>
+<style scoped>
+audio {
+  opacity: 1;
+}
+</style>

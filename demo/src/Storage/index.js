@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import http from "@/service";
-import { ref } from "vue";
+import { computed, ref, onMounted, watch } from "vue";
 
 export const userAlbumStore = defineStore("AlbumStore", () => {
   const albums = ref([]);
@@ -53,5 +53,75 @@ export const userDJStore = defineStore("DJStore", () => {
   return {
     getCatelist,
     getDJ_recommend,
+  };
+});
+export const userlognStore = defineStore("lognStore", () => {
+  const isLogn = ref(false);
+
+  function changeLognSate(value) {
+    isLogn.value = value;
+  }
+  return {
+    isLogn,
+    changeLognSate,
+  };
+});
+export const userAccountStore = defineStore("AccountStore", () => {
+  const account = ref({});
+  return {
+    account,
+  };
+});
+export const userSongStore = defineStore("SongStore", () => {
+  const currSongId = computed(() => {
+    return currPlaySong.value[currIndex.value]?.id;
+  });
+  const currPlaySong = ref([]);
+  const currSongURL = computed(() => {
+    return `https://music.163.com/song/media/outer/url?id=${
+      currPlaySong.value[currIndex.value]?.id
+    }.mp3`;
+  });
+  const currIndex = computed(() => {
+    let currIndex = 0;
+    currPlaySong.value.forEach((song, index) => {
+      if (currSongId.value === song.id) {
+        currIndex = index;
+      } else {
+        currIndex = 0;
+      }
+    });
+    return currIndex;
+  });
+  const isPlay = ref(false);
+  const audioEl = ref({});
+  onMounted(() => {
+    audioEl.value = document.getElementsByTagName("audio");
+  });
+  watch(isPlay, (curr) => {
+    setTimeout(() => {
+      if (curr) {
+        audioEl.value[0]?.play();
+      } else {
+        audioEl.value[0]?.pause();
+      }
+    });
+  });
+  watch(currSongId, () => {
+    setTimeout(() => {
+      if (isPlay.value) {
+        audioEl.value[0]?.play();
+      } else {
+        audioEl.value[0]?.pause();
+      }
+    });
+  });
+
+  return {
+    currIndex,
+    currPlaySong,
+    currSongURL,
+    currSongId,
+    isPlay,
   };
 });

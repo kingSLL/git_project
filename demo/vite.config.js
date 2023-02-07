@@ -30,4 +30,14 @@ export default defineConfig({
       ),
     },
   },
+  server: {
+    // proxy: {
+    //   "/api": {
+    //     target: "https://music.163.com/discover",
+    //     ws: true,
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, ""),
+    //   },
+    // },
+  },
 });

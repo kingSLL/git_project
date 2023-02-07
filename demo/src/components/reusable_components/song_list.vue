@@ -97,6 +97,7 @@ function toSong(path, id) {
 <style lang="less" scoped>
 .song_list {
   width: 100%;
+  margin-bottom: 30px;
   .subtitle {
     .songs {
       margin: 10px 0 0 40px;

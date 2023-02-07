@@ -35,32 +35,16 @@
               </div>
             </div>
             <div class="btn_group">
-              <div class="play_btn">
-                <a class="btn_icon play">
-                  <p>播放</p>
-                </a>
-                <a class="btn_icon additional"> </a>
-              </div>
-              <div class="collection_btn">
-                <a class="btn_icon">
-                  <p>收藏</p>
-                </a>
-              </div>
-              <div class="share_btn">
-                <a class="btn_icon">
-                  <p>分享</p>
-                </a>
-              </div>
-              <div class="download_btn">
-                <a class="btn_icon">
-                  <p>下载</p>
-                </a>
-              </div>
-              <div class="comment_btn">
-                <a class="btn_icon">
-                  <p>（{{ commentSong?.total }}）</p>
-                </a>
-              </div>
+              <play-btn :playList="song"></play-btn>
+              <simple-btn type="收藏"></simple-btn>
+              <simple-btn type="分享"></simple-btn>
+              <simple-btn type="下载"></simple-btn>
+              <simple-btn
+                type="评论"
+                :info="{
+                  commentCount: commentSong?.total,
+                }"
+              ></simple-btn>
             </div>
             <div class="lyric">
               <template v-for="(lyric, index) in lyrics" :key="index">
@@ -85,6 +69,8 @@
 import IconCps from "multiplexing/icon_cps.vue";
 import CommentCps from "multiplexing/comment_cps.vue";
 import SingleSupplement from "multiplexing/single_supplement.vue";
+import PlayBtn from "multiplexing/btn/play_btn.vue";
+import SimpleBtn from "multiplexing/btn/simple_btn.vue";
 
 import http from "@/service";
 import { parseSongStr } from "@/hooks";
@@ -94,7 +80,7 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 
-const song = ref({});
+const song = ref([]);
 const privileges = ref({});
 //歌词
 const lyrics = ref([]);
@@ -109,6 +95,7 @@ http.get(`/song/detail?ids=${route.query.id}`).then((res) => {
   song.value = res.data.songs;
   privileges.value = res.data.privileges;
 });
+
 http.get(`/lyric?id=${route.query.id}`).then((res) => {
   lyrics.value = parseSongStr(res.data.lrc.lyric);
 });

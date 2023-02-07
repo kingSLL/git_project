@@ -86,6 +86,10 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: "/user/home",
+      component: () => import("pages/route/user/home/user_home.vue"),
+    },
   ],
 });
 

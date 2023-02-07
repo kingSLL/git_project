@@ -1,14 +1,25 @@
 <!-- ==========template=============-->
 <template>
   <div class="play_btn">
-    <a class="btn_icon play">
+    <a class="btn_icon play" @click="play">
       <p>播放</p>
     </a>
     <a class="btn_icon additional"> </a>
   </div>
 </template>
 <!-- ===========script============== -->
-<script setup></script>
+<script setup>
+import { userSongStore } from "@/Storage";
+const props = defineProps({
+  playList: Array,
+});
+
+const SongStore = userSongStore();
+function play() {
+  SongStore.currPlaySong = props.playList;
+  SongStore.isPlay = true;
+}
+</script>
 <!-- ============style============== -->
 <style lang="less" scoped>
 .play_btn {

@@ -14,36 +14,27 @@
           <span style="color: #999">({{ rankName?.updateFrequency }})</span>
         </div>
         <div class="btn">
-          <el-button-group class="play">
-            <el-button type="primary">
-              <el-icon style="">
-                <VideoPlay />
-              </el-icon>
-              播放
-            </el-button>
-            <el-button type="primary">
-              <el-icon class="el_i_plus">
-                <Plus />
-              </el-icon>
-            </el-button>
-          </el-button-group>
+          <paly-btn :playList="list?.tracks"></paly-btn>
 
-          <el-button>
-            <el-icon><FolderAdd /></el-icon>
-            ({{ list?.subscribedCount }})
-          </el-button>
-          <el-button>
-            <el-icon><Share /></el-icon>
-            ({{ list?.shareCount }})
-          </el-button>
-          <el-button>
-            <el-icon><Download /></el-icon>
-            下载
-          </el-button>
-          <el-button>
-            <el-icon><ChatDotRound /></el-icon>
-            ({{ list?.commentCount }})
-          </el-button>
+          <simple-btn
+            type="收藏"
+            :info="{
+              subscribedCount: list?.subscribedCount,
+            }"
+          ></simple-btn>
+          <simple-btn
+            type="分享"
+            :info="{
+              shareCount: list?.shareCount,
+            }"
+          ></simple-btn>
+          <simple-btn type="下载"></simple-btn>
+          <simple-btn
+            type="评论"
+            :info="{
+              commentCount: list?.commentCount,
+            }"
+          ></simple-btn>
         </div>
       </div>
     </div>
@@ -57,15 +48,9 @@ import { computed } from "vue";
 import * as dayjs from "dayjs";
 
 import SongList from "multiplexing/song_list.vue";
+import PalyBtn from "multiplexing/btn/play_btn.vue";
+import SimpleBtn from "multiplexing/btn/simple_btn.vue";
 // import CommentCps from "multiplexing/comment_cps.vue";
-import {
-  Plus,
-  VideoPlay,
-  FolderAdd,
-  Download,
-  Share,
-  ChatDotRound,
-} from "@element-plus/icons-vue";
 // =============================
 const getTime = computed(() => {
   return dayjs(props.list?.trackUpdateTime).format("MM月DD天");

@@ -30,7 +30,7 @@
               <p class="time">{{ getTime }} 创建</p>
             </div>
             <div class="btn_group">
-              <play-btn></play-btn>
+              <play-btn :play-list="playlist?.tracks"></play-btn>
               <simple-btn
                 type="收藏"
                 :info="{

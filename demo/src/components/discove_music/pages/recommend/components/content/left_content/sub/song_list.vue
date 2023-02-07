@@ -17,7 +17,7 @@
                   {{ item.name }}
                 </a>
               </h4>
-              <i class="iconfont play">&#xe624;</i>
+              <i class="iconfont play" @click="play(item?.songs)">&#xe624;</i>
               <i class="iconfont collection">&#xe613;</i>
             </div>
           </div>
@@ -54,9 +54,11 @@
 import SubTitle from "multiplexing/sub_title.vue";
 
 import http from "@/service";
+import { userSongStore } from "@/Storage";
 
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+const SongStore = userSongStore();
 
 const title = "榜单";
 const totalSong = 10;
@@ -82,6 +84,10 @@ function topath(path, id) {
     path: path,
     query: { id: id },
   });
+}
+function play(playList) {
+  SongStore.currPlaySong = playList;
+  SongStore.isPlay = true;
 }
 </script>
 <!-- ============style============== -->
